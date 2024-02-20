@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load static %}
+{% block main-header %}
+	<!-- .page-title-bar -->
+	<header class="page-title-bar">
+		<!-- page title stuff goes here -->
+		<h1 class="page-title"><a href="{% url 'quiz:subject'%}">{% trans 'Môn học' %}</a>/ {% trans 'Thêm môn học'%}</h1>
+	</header>
+	<!-- /.page-title-bar -->
+{% endblock main-header %}
+{% block main-content %}
+<div class="page-section">
+	<div class="card">
+		{% if has_error %}
+			<div class="card-header">
+				<label id="codeError" class="error" style="margin-top: 2%;margin-left: 3%;">{{ has_error }} </label>
+			</div>
+		{% endif %}
+		<div class="card-body">
+			<h3 class="card-title">{% trans 'Khai báo thông tin'%}</h3>
+			<form class="needs-validation" novalidate id="form" method="post" action="{{ app_path }}">
+				{% csrf_token %}
+				<div class="form-row">
+					<div class="col-md-12 mb-3">
+						<label for="txtCode">
+							{% trans 'Mã môn học'%}
+						</label>
+						<input type="text" class="form-control" id="txtCode" name="txtCode" 
+							placeholder="{% trans 'Mã môn học'%}" required >
+						<div id="inputGroupPrepend" class="invalid-tooltip">
+									{% trans 'Hãy nhập chính xác mã môn học'%}</div>
+					</div>
+				</div>
+				
+				<div class="form-row">
+					<div class="col-md-12 mb-3">
+						<label for="txtName">
+							{% trans 'Tên môn học'%}
+						</label>
+						<input type="text" class="form-control" id="txtName" name="txtName"
+							placeholder="{% trans 'Tên môn học'%}" required>
+						<div id="inputGroupPrepend" class="invalid-tooltip">
+									{% trans 'Hãy nhập chính xác tên môn học'%}</div>
+					</div>
+				</div>
+				
+				<div class="form-actions justify-content-center">
+					<button class="btn btn-primary" id="submit"type="submit" style="width: 100px">{% trans 'Thêm mới'%}</button>
+					<a href="{% url 'quiz:subject'%}" type="button" class="btn btn-warning" style="width: 100px"> {% trans 'Trở về'%}</a>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+{% endblock main-content %}
+
+{% block scripts %}
+<script>
+(function() {
+	'use strict';
+	window.addEventListener('load', function() {
+		// Fetch all the forms we want to apply custom Bootstrap validation styles to
+		var forms = document.getElementsByClassName('needs-validation');
+		// Loop over them and prevent submission
+		var validation = Array.prototype.filter.call(forms, function(form) {
+			form.addEventListener('submit', function(event) {
+				if (form.checkValidity() === false) {
+					event.preventDefault();
+					event.stopPropagation();
+				}
+				form.classList.add('was-validated');
+			}, false);
+		});
+		}, false);
+	})();
+</script>
+{% endblock scripts %}

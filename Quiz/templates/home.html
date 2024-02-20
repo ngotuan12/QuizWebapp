@@ -1,0 +1,168 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load static %}
+{% block styles %}
+<style>
+.home-item-block{
+	display: inline-block;
+	cursor: pointer;
+}
+.home-item-block:hover{
+	background: rgba(204,204,204,0.3);
+}
+.home-item-block .home-item{
+	margin: 0px 7px;
+	display: inline-block;
+	max-width: 130px;
+	padding: 30px;
+	position: relative;
+	vertical-align: top;
+	width: 130px;
+}
+.home-item-block .home-item div{
+	margin: 0;
+	padding: 0;
+}
+.home-item-block .home-item .home-item-icon{
+	height: 58px;
+	text-align: center;
+}
+.home-item-block .home-item .home-item-icon img{
+	width: 48px;
+	height: 48px;
+}
+
+.home-item-block .home-item .home-item-icon i{
+	width: 48px;
+	height: 48px;
+	font-size: 45px;
+}
+.home-item-block .home-item .home-item-title{
+	overflow: hidden;
+	padding-top: 10px;
+	text-overflow: ellipsis;
+	text-align: center;
+	white-space: normal;
+	line-height: 1.4;
+	font-weight: 500;
+	font-size: 14px;
+}
+.home-item-block .home-item .home-item-des{
+	margin-top: 4px;
+	overflow: hidden;
+	text-align: center;
+	text-overflow: ellipsis;
+	white-space: normal;
+	font-weight: 400;
+	font-size: 12px;
+	opacity: .87;
+	line-height: 1.4;
+}
+</style>
+{% endblock styles %}
+{% block main-header %}
+	<!-- .page-title-bar -->
+	<header class="page-title-bar">
+		<!-- page title stuff goes here -->
+		<h1 class="page-title">{% trans 'Bảng tổng quan' %}</h1>
+	</header>
+	<!-- /.page-title-bar -->
+{% endblock main-header %}
+{% block main-content %}
+<div class="page-section">
+	<div class="row">
+		<div class="col-sm" style="margin-left: 20px">
+			<a class="home-item-block" href="{% url 'quiz:question' %}">
+				<div class="home-item-block">
+					<div class="home-item">
+						<div>
+							<div class="home-item-icon">
+								<img src="{% static 'images/home/monitor-graphs-48.png' %}">
+							</div>
+							<div class="home-item-title"> {% trans 'Câu hỏi' %} </div>
+						</div>
+					</div>
+				</div>
+			</a>
+			
+			<a class="home-item-block" href="#">
+				<div class="home-item-block">
+					<div class="home-item">
+						<div>
+							<div class="home-item-icon">
+								<img src="{% static 'images/home/google-map-48x48.png' %}">
+							</div>
+							<div class="home-item-title"> {% trans 'Bản đồ' %} </div>
+						</div>
+					</div>
+				</div>
+			</a>
+			
+			<a class="home-item-block" href="#">
+				<div class="home-item-block">
+					<div class="home-item">
+						<div>
+							<div class="home-item-icon">
+								<img src="{% static 'images/home/migration-quantum-48.svg' %}">
+							</div>
+							<div class="home-item-title"> {% trans 'Luyện thi' %} </div>
+						</div>
+					</div>
+				</div>
+			</a>
+			
+			<a class="home-item-block" href="#">
+				<div class="home-item-block">
+					<div class="home-item">
+						<div>
+							<div class="home-item-icon">
+								<img src="{% static 'images/home/people-quantum-48.svg' %}"> 
+							</div>
+							<div class="home-item-title">{% trans 'Tài khoản' %}</div>
+						</div>
+					</div>
+				</div>
+			</a>
+			
+			<a class="home-item-block" href="#">
+				<div class="home-item-block">
+					<div class="home-item">
+						<div>
+							<div class="home-item-icon">
+								<img src="{% static 'images/home/groups-quantum-48.svg' %}">  
+							</div>
+							<div class="home-item-title">{% trans 'Phòng ban' %}</div>
+						</div>
+					</div>
+				</div>
+			</a>
+			
+			<a class="home-item-block" href="#">
+				<div class="home-item-block">
+					<div class="home-item">
+						<div>
+							<div class="home-item-icon">
+								<img src="{% static 'images/home/reports-quantum-48.svg' %}">
+							</div>
+							<div class="home-item-title">{% trans 'Báo cáo' %}</div>
+						</div>
+					</div>
+				</div>
+			</a>
+			
+			<a class="home-item-block" href="#">
+				<div class="home-item-block">
+					<div class="home-item">
+						<div>
+							<div class="home-item-icon">
+								<img src="{% static 'images/home/ic_support_48_v2.svg' %}">
+							</div>
+							<div class="home-item-title">{% trans 'Hỗ trợ' %}</div>
+						</div>
+					</div>
+				</div>
+			</a>
+		</div>
+	</div>
+</div>
+{% endblock main-content %}

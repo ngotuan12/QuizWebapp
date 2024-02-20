@@ -1,0 +1,113 @@
+{% load i18n %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Required meta tags -->
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>MSE quiz management</title>
+<!-- End Required meta tags -->
+<!-- FAVICONS -->
+<link rel="apple-touch-icon" sizes="144x144"
+	href="{% static 'images/apple-touch-icon.png' %}">
+<meta name="theme-color" content="#3063A0">
+<!-- End FAVICONS -->
+<!-- GOOGLE FONT -->
+<link
+	href="{% static 'stylesheets/google-font.css'%}"
+	rel="stylesheet">
+<!-- End GOOGLE FONT -->
+
+<!-- BEGIN PLUGINS STYLES -->
+<link rel="stylesheet"
+	href="{% static 'vendor/iconic/css/open-iconic-bootstrap.min.css' %}">
+<link rel="stylesheet"
+	href="{% static 'vendor/fontawesome/css/all.css' %}">
+<!-- END PLUGINS STYLES -->
+<!-- BEGIN THEME STYLES -->
+<link rel="stylesheet" href="{% static 'stylesheets/theme.css'%}"
+	data-skin="default">
+<link rel="stylesheet" href="{% static 'stylesheets/font-awesome.min.css' %}">
+<link rel="stylesheet" href="{% static 'stylesheets/custom.css' %}">
+
+{% block styles %}
+{% endblock styles %}
+<!-- Disable unused skin immediately -->
+
+<!-- END THEME STYLES -->
+</head>
+<body>
+	<!-- .app -->
+	<div class="app">
+		{% block header %} 
+			{% include 'base-header.html' %}
+		{% endblock header %}
+		
+		{% block aside %} 
+			{% include 'base-aside.html' %}
+		{% endblock aside %}
+		
+		{% block main %}
+		<!-- .app-main -->
+		<main class="app-main">
+			<!-- .wrapper -->
+			<div class="wrapper">
+				<!-- .page -->
+				<div class="page">
+					<!-- .page-inner -->
+					<div class="page-inner">
+						{% block main-header %}
+							<!-- .page-title-bar -->
+							<header class="page-title-bar">
+								<!-- page title stuff goes here -->
+								<h1 class="page-title">Page title</h1>
+							</header>
+							<!-- /.page-title-bar -->
+						{% endblock main-header %}
+						
+						{% block main-content %}
+						<!-- .page-section -->
+						<div class="page-section">
+							<!-- page content goes here -->
+							<div class="section-block">
+								<p>Hello world!</p>
+							</div>
+						</div>
+						<!-- /.page-section -->
+						{% endblock main-content %}
+					</div>
+					<!-- /.page-inner -->
+				</div>
+				<!-- /.page -->
+			</div>
+			<!-- /.wrapper -->
+		</main>
+		<!-- /.app-main -->
+		{% endblock main %}
+	</div>
+	{% block js %}
+	<!-- /.app -->
+	<!-- BEGIN BASE JS -->
+	<script src="{% static 'vendor/jquery/jquery-3.3.1.min.js' %}"></script>
+	<script src="{% static 'vendor/bootstrap/js/popper.min.js' %}"></script>
+	<script src="{% static 'vendor/bootstrap/js/bootstrap.min.js' %}"></script>
+	<!-- END BASE JS -->
+	<!-- BEGIN PLUGINS JS -->
+	<script src="{% static 'vendor/pace/pace.min.js' %}"></script>
+	<script src="{% static 'vendor/stacked-menu/stacked-menu.min.js' %}"></script>
+	<script src="{% static 'vendor/perfect-scrollbar/perfect-scrollbar.min.js' %}"></script>
+	<!-- END PLUGINS JS -->
+	<script src="{% static 'javascript/jquery.cookies.js' %}"></script>
+	<script src="{% static 'javascript/loading.js' %}"></script>
+	<script src="{% static 'javascript/message.js' %}"></script>
+	<!-- BEGIN THEME JS -->
+	<script src="{% static 'javascript/theme.js' %}"></script>
+	<script src="{% static 'javascript/custom.js' %}"></script>
+	<!-- END THEME JS -->
+	{% endblock js %}
+	{% block scripts %}
+	{% endblock scripts %}
+</body>
+</html>

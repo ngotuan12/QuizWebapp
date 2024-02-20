@@ -1,0 +1,90 @@
+{% load static %}
+{% load i18n %}
+<!-- .app-aside -->
+<aside class="app-aside app-aside-expand-md app-aside-light">
+	<!-- .aside-content -->
+	<div class="aside-content">
+		<!-- .aside-header -->
+		<header class="aside-header d-block d-md-none">
+			<!-- .btn-account -->
+			<button class="btn-account" type="button" data-toggle="collapse"
+				data-target="#dropdown-aside">
+				<span class="user-avatar user-avatar-lg"><img
+					src="{% static 'images/avatar/default.png'%}" alt=""></span> <span
+					class="account-icon"><span class="fa fa-caret-down fa-lg"></span></span>
+				<span class="account-summary">
+					<span class="account-name">{{ request.user.first_name|add:" "|add:request.user.last_name}}</span> 
+					<span class="account-description">{{ user.profile.specialize }}</span>
+				</span>
+			</button>
+			<!-- /.btn-account -->
+			<!-- .dropdown-aside -->
+			<div id="dropdown-aside" class="dropdown-aside collapse">
+				<!-- dropdown-items -->
+				<div class="pb-3">
+					<a class="dropdown-item" href="#"><span
+						class="dropdown-icon oi oi-person"></span> Profile</a> <a
+						class="dropdown-item" href="{% url 'quiz:sign_out' %}"><span
+						class="dropdown-icon oi oi-account-logout"></span> Logout</a>
+					<div class="dropdown-divider"></div>
+					<a class="dropdown-item" href="#">Help Center</a> <a
+						class="dropdown-item" href="#">Ask Forum</a> <a
+						class="dropdown-item" href="#">Keyboard Shortcuts</a>
+				</div>
+				<!-- /dropdown-items -->
+			</div>
+			<!-- /.dropdown-aside -->
+		</header>
+		<!-- /.aside-header -->
+		<!-- .aside-menu -->
+		<div class="aside-menu overflow-hidden">
+			<!-- .stacked-menu -->
+			<nav id="stacked-menu" class="stacked-menu">
+				<!-- .menu -->
+				<ul class="menu">
+					<!-- .menu-item -->
+					<li class="menu-item"><a href="{% url 'quiz:home'%}" class="menu-link home"><span
+							class="menu-icon fas fa-home"></span> <span class="menu-text">Dashboard</span></a>
+					</li>
+					<!-- /.menu-item -->
+					<!-- /.menu-item -->
+					<li class="menu-item has-child"><a href="#" class="menu-link"><span
+							class="menu-icon oi oi-person"></span> <span class="menu-text">{% trans 'Trường thi' %}</span></a>
+						<!-- child menu -->
+						<ul class="menu">
+							<li class="menu-item"><a href="{% url 'quiz:practice' %}"
+								class="menu-link">{% trans 'Luyện thi' %}</a></li>
+							<li class="menu-item"><a href="{% url 'quiz:history' %}"
+								class="menu-link">{% trans 'Lịch sử' %}</a></li>
+							<li class="menu-item"><a href="{% url 'quiz:certificate' %}"
+								class="menu-link">{% trans 'Chứng chỉ' %}</a></li>
+						</ul>
+						<!-- /child menu -->
+					</li>
+					<!-- .menu-item -->
+					
+					<!-- .menu-item -->
+					<li class="menu-item has-child"><a href="#"
+						class="menu-link"><span class="menu-icon oi oi-browser"></span>
+							<span class="menu-text">{% trans 'Danh mục' %}</span> <span
+							class="badge badge-subtle badge-success">+4</span></a>
+						<ul class="menu">
+							<!-- Môn học -->
+							<li class="menu-item"><a href="{% url 'quiz:subject' %}" class="menu-link">{% trans 'Môn học' %}</a></li>
+							<!-- Câu hỏi -->
+							<li class="menu-item"><a href="{% url 'quiz:question' %}" class="menu-link">{% trans 'Câu hỏi' %}</a></li>
+							<!-- Đề thi -->
+							<li class="menu-item"><a href="{% url 'quiz:exam' %}" class="menu-link">{% trans 'Đề thi' %}</a></li>
+						</ul> 
+					</li>
+					<!-- /.menu-item -->
+				</ul>
+				<!-- /.menu -->
+			</nav>
+			<!-- /.stacked-menu -->
+		</div>
+		<!-- /.aside-menu -->
+	</div>
+	<!-- /.aside-content -->
+</aside>
+<!-- /.app-aside -->
