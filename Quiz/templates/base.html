@@ -16,27 +16,34 @@
 <!-- End FAVICONS -->
 <!-- GOOGLE FONT -->
 <link
-	href="{% static 'stylesheets/google-font.css'%}"
+	href="https://fonts.googleapis.com/css?family=Fira+Sans:400,500,600"
 	rel="stylesheet">
 <!-- End GOOGLE FONT -->
 
 <!-- BEGIN PLUGINS STYLES -->
 <link rel="stylesheet"
 	href="{% static 'vendor/iconic/css/open-iconic-bootstrap.min.css' %}">
-<link rel="stylesheet"
-	href="{% static 'vendor/fontawesome/css/all.css' %}">
 <!-- END PLUGINS STYLES -->
 <!-- BEGIN THEME STYLES -->
 <link rel="stylesheet" href="{% static 'stylesheets/theme.css'%}"
 	data-skin="default">
 <link rel="stylesheet" href="{% static 'stylesheets/font-awesome.min.css' %}">
 <link rel="stylesheet" href="{% static 'stylesheets/custom.css' %}">
-
+<style>
+#codeError{
+	color: red;
+}
+.page-inner{
+	padding: 0.5rem;
+}
+@media (min-width: 200px) {
+  .custom-select {
+    height: 2.20rem;
+  }
+}
+</style>
 {% block styles %}
 {% endblock styles %}
-<!-- Disable unused skin immediately -->
-
-<!-- END THEME STYLES -->
 </head>
 <body>
 	<!-- .app -->
@@ -92,22 +99,23 @@
 	<!-- BEGIN BASE JS -->
 	<script src="{% static 'vendor/jquery/jquery-3.3.1.min.js' %}"></script>
 	<script src="{% static 'vendor/bootstrap/js/popper.min.js' %}"></script>
-	<script src="{% static 'vendor/bootstrap/js/bootstrap.min.js' %}"></script>
+	<script src="{% static 'javascript/bootstrap.min.js' %}"></script>
 	<!-- END BASE JS -->
 	<!-- BEGIN PLUGINS JS -->
 	<script src="{% static 'vendor/pace/pace.min.js' %}"></script>
 	<script src="{% static 'vendor/stacked-menu/stacked-menu.min.js' %}"></script>
 	<script src="{% static 'vendor/perfect-scrollbar/perfect-scrollbar.min.js' %}"></script>
 	<!-- END PLUGINS JS -->
-	<script src="{% static 'javascript/jquery.cookies.js' %}"></script>
-	
-	<!-- BEGIN THEME JS -->
 	<script src="{% static 'javascript/theme.js' %}"></script>
+	<script src="{% static 'javascript/jquery.cookies.js' %}"></script>
+	<script src="{% static 'javascript/loading.js' %}"></script>
+	<script src="{% static 'javascript/message.js' %}"></script>
+	<!-- BEGIN THEME JS -->
+	
 	<script src="{% static 'javascript/custom.js' %}"></script>
 	<!-- END THEME JS -->
 	
-	<script src="{% static 'javascript/loading.js' %}"></script>
-	<script src="{% static 'javascript/message.js' %}"></script>
+	
 	{% endblock js %}
 	{% block scripts %}
 	{% endblock scripts %}

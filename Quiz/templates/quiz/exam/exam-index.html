@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load static %}
+{% block main-header %}
+	<!-- .page-title-bar -->
+	<header class="page-title-bar">
+		<!-- page title stuff goes here -->
+		<h1 class="page-title">{% trans 'Đề thi' %}</h1>
+	</header>
+	<!-- /.page-title-bar -->
+{% endblock main-header %}
+{% block main-content %}
+<div class="page-section">
+	<div class="card card-fluid">
+		<div class="card-header pb-2">
+			<div class="row">
+				<div class="col-sm-10 pl-0">
+					<div class="form-group">
+						<div class="input-group input-group-alt">
+							<div class="input-group has-clearable">
+								<button id="clear-search" type="button" class="close"
+									aria-label="Close">
+									<span aria-hidden="true"><i class="fa fa-times-circle"></i></span>
+								</button>
+								<div class="input-group-prepend">
+									<span class="input-group-text"><span
+										class="oi oi-magnifying-glass"></span></span>
+								</div>
+								<input id="table-search" type="text" class="form-control"
+									placeholder="{% trans 'Tìm kiếm'%}">
+							</div>
+						</div>
+					</div>
+					
+				</div>
+				<div class="col-sm-2 pl-0">
+					<a class="btn btn-success btn-block" 
+						href="{% url 'quiz:exam_add'%}" >
+						{% trans 'Thêm'%}</a>
+				</div>
+			</div>
+		</div>
+		
+		<div class="card-body" style="font-size: 13px">
+			<table class="table table-hover" id="tbl-subject">
+				<thead>
+					<tr>
+						<th>{% trans 'Môn học'%}</th>
+						<th>{% trans 'Mã đề thi'%}</th>
+						<th>{% trans 'Số câu hỏi'%}</th>
+						<th>{% trans 'Thời gian'%}</th>
+						<th>{% trans 'Người tạo'%}</th>
+						<th>{% trans 'Ngày tạo'%}</th>
+						<th class="text-center">{% trans 'Sửa|Xóa'%}</th>
+					</tr>
+				</thead>
+				
+				<tbody>
+					{% for exam in exams %}
+					<tr>
+						<td>{{ exam.subject.name }}</td>
+						<td>{{ exam.code }}</td>
+						<td>{{ exam.num_question }}</td>
+						<td>{{ exam.duration }}</td>
+						<td>{{ exam.create_user.first_name|add:" "|add:exam.create_user.last_name }}</td>
+						<td>{{ exam.create_date }}</td>
+						<td class="text-center">
+							<a class="btn btn-sm btn-icon btn-secondary" 
+								href="{% url 'quiz:exam_edit' exam.id %}">
+									<i class="fa fa-pencil"></i>
+							</a>
+							
+							<a class="btn btn-sm btn-icon btn-secondary" href="#" 
+								onclick="removeExam({{ exam.id }},'{{ exam.code }}');"><i class="fa fa-trash-o"></i></a>
+						</td>
+					</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+{% endblock main-content %}

@@ -28,6 +28,10 @@ urlpatterns = [
     path('subject/delete/<str:subject_id>/', subject_views.delete , name='subject_delete'),
     # exam
     path('exam/', exam_views.index , name='exam'),
+    path('exam/add', exam_views.add , name='exam_add'),
+    path('exam/edit/<int:exam_id>/', exam_views.edit , name='exam_edit'),
+    path('exam/delete/<str:exam_id>/', exam_views.delete , name='exam_delete'),
+    # 
     path('practice/', practice_views.index , name='practice'),
     path('history/', history_views.index , name='history'),
     path('certificate/', certificate_views.index , name='certificate'),

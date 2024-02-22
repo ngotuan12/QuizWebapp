@@ -5,7 +5,7 @@
 	<!-- .page-title-bar -->
 	<header class="page-title-bar">
 		<!-- page title stuff goes here -->
-		<h1 class="page-title">{{ data }} {% trans 'Môn học' %}</h1>
+		<h1 class="page-title">{% trans 'Môn học' %}</h1>
 	</header>
 	<!-- /.page-title-bar -->
 {% endblock main-header %}
@@ -67,22 +67,6 @@
 								onclick="removeSubject({{ subject.id }},'{{ subject.name }}');"><i class="fa fa-trash-o"></i></a>
 						</td>
 					</tr>
-					{% for question in subject.question_set.all %}
-					<tr>
-						<td>{{ question.id }}</td>
-						<td>{{ question.text }}</td>
-						<td>{{ subject.create_date }}</td>
-						<td class="text-center">
-							<a class="btn btn-sm btn-icon btn-secondary" 
-								href="{% url 'quiz:subject_edit' subject.id %}">
-									<i class="fa fa-pencil"></i>
-							</a>
-							
-							<a class="btn btn-sm btn-icon btn-secondary" href="#" 
-								onclick="removeSubject({{ subject.id }},'{{ subject.name }}');"><i class="fa fa-trash-o"></i></a>
-						</td>
-					</tr>
-					{% endfor %}
 					{% endfor %}
 				</tbody>
 			</table>
@@ -129,7 +113,8 @@ $(document).ready(function() {
 });
 function removeSubject(subject_id,subject_name)
 {
-	confirm = $.message.confirm("{% trans 'Bạn muốn xóa môn học <strong>'%} "+ subject_name+'</strong> ? ');
+	
+	var confirm = $.message.confirm("{% trans 'Bạn muốn xóa môn học <strong>'%} "+ subject_name+'</strong> ? ');
 	confirm.on('message.confirm',function(){
 		var url = "{% url 'quiz:subject_delete' 'p_subject_id' %}".replace("p_subject_id",subject_id);
 		
@@ -148,7 +133,6 @@ function removeSubject(subject_id,subject_name)
 			{
 				window.location.reload();
 			}
-			$.message.destroy();
 			$.fn.loading.hide();
 		});
 	});
