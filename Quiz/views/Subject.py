@@ -7,17 +7,31 @@ Created on Feb 6, 2024
 import json
 
 from django.contrib.auth.decorators import login_required
-from django.db.models.query import Prefetch
+# from django.db.models.query import Prefetch
+from django.forms.models import model_to_dict
 from django.http.response import HttpResponse
 from django.shortcuts import render, redirect, resolve_url
 
-from Quiz.models import Question
 from Quiz.models.Subject import Subject
+from Quiz.util.DateEncoder import DateEncoder
+from _datetime import datetime
 
 
 @login_required()
 def index(request):
-    context = {'subjects':Subject.objects.prefetch_related(Prefetch("question_set",to_attr="questions"))}
+    # subjects = Subject.objects.prefetch_related(Prefetch("question_set",to_attr="questions"))
+    subjects = Subject.objects.all()
+    context = {'subjects':subjects}
+    
+    data = [{'subject':model_to_dict(subject),'questions':[ model_to_dict(question) for question in subject.question_set.all()]} for subject in subjects]
+    print(data)
+    # print(serializers.serialize('json', subjects))
+    json_data = json.dumps( data, cls=DateEncoder,ensure_ascii=False)
+    print(json_data)
+    context.update({"data":json_data})
+    # serializedData = [ json.dumps({'subject': model_to_dict(subject), 
+    #               'questions': json.dumps( list(subject.subject_questions.values()), cls=DateEncoder) }, ensure_ascii=False).encode('utf8') for subject in subjects]
+    # print(serializedData)
     return render(request, "quiz/subject/subject-index.html", context)
 @login_required()
 def add(request):
@@ -27,6 +41,7 @@ def add(request):
             subject = Subject()
             subject.code = request.POST.get('txtCode')
             subject.name = request.POST.get('txtName')
+            subject.create_date = datetime.now()
             subject.save()
             return redirect(resolve_url('quiz:subject'))
     except Exception as ex:

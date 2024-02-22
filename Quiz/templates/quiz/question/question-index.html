@@ -1,0 +1,216 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load static %}
+{% block main-header %}
+	<!-- .page-title-bar -->
+	<header class="page-title-bar">
+		<!-- page title stuff goes here -->
+		<h1 class="page-title">{% trans 'Thư viện câu hỏi' %}</h1>
+	</header>
+	<!-- /.page-title-bar -->
+{% endblock main-header %}
+{% block main-content %}
+<div class="page-section">
+	<div class="card card-fluid">
+		<div class="card-header pb-3">
+			<label for="slSubject">Môn học</label>
+			<select class="custom-select" id="slSubject" data-placeholder="Chọn môn học.." >
+				{% for subject in subjects %}
+					<option value="{{ subject.id }}" 
+						{% if request.GET.subject_id and request.GET.subject_id == subject.id|stringformat:"i" %} 
+						selected 
+						{% elif forloop.first %} 
+						selected 
+						{% endif %}>{{ subject.name }}</option>
+				{% endfor %}
+			</select>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-sm-6">
+			<div class="card card-fluid">
+				<div class="card-header pb-2">
+					<div class="form-group">
+						<div class="input-group input-group-alt" style="padding-right: 100px;">
+							<div class="input-group has-clearable">
+								<button id="clear-search" type="button" class="close" aria-label="Close">
+									<span aria-hidden="true"><i class="fa fa-times-circle"></i></span>
+								</button>
+								<div class="input-group-prepend">
+									<span class="input-group-text"><span class="oi oi-magnifying-glass"></span></span>
+								</div>
+								<input id="table-search" type="text" class="form-control" placeholder="Search">
+							</div>
+							
+							<a class="btn btn-success" href="#" 
+								style="width:95px;position: absolute;top: 0;right: 2px">Import</a>
+						</div>
+					</div>
+				</div>
+				
+				<div class="card-body" style="font-size: 13px">
+					<table class="table table-hover" id="tblQuestion">
+						<thead>
+							<tr>
+								<th>{% trans 'Content'%}</th>
+								<th>{% trans 'Image'%}</th>
+								<th class="text-center"></th>
+							</tr>
+						</thead>
+						
+						<tbody id="tbd_device">
+							{% for question in questions %}
+							<tr id="{{ question.id }}">
+								<td>{{ question.text }}</td>
+								<td>{{ STATIC_URL }}{{ question.image_name }}</td>
+								<td class="text-center">
+									<a class="btn btn-sm btn-icon btn-secondary" 
+										href="">
+											<i class="fa fa-pencil"></i>
+									</a>
+									<a class="btn btn-sm btn-icon btn-secondary" href="#" 
+										onclick="removeQuestion({{ question.id }},'{{ question.text|truncatechars:20 }}');"><i class="fa fa-trash-o"></i></a>
+								</td>
+							</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+		
+		<div class="col-sm-6">
+			<div class="card card-fluid">
+				<div class="card-header pb-2"> Câu trả lời </div>
+				
+				<div class="card-body" style="font-size: 13px">
+					<table class="table table-hover" id="tblQuestion">
+						<thead>
+							<tr>
+								<th>{% trans 'Text'%}</th>
+								<th>{% trans 'Right'%}</th>
+								<th class="text-center"></th>
+							</tr>
+						</thead>
+				</table>
+			</div>
+		</div>
+	</div>
+	
+</div>
+{% endblock main-content %}
+
+{% block scripts %}
+<script src="{% static 'vendor/datatables/jquery.dataTables.min.js' %} "></script>
+<script src="{% static 'vendor/datatables/extensions/buttons/dataTables.buttons.min.js' %}"></script>
+<script src="{% static 'vendor/datatables/extensions/buttons/buttons.bootstrap4.min.js' %}"></script>
+<script src="{% static 'vendor/datatables/extensions/buttons/buttons.html5.min.js' %}"></script>
+<script src="{% static 'vendor/datatables/extensions/buttons/buttons.print.min.js' %}"></script>
+
+<script src="{% static 'vendor/datatables/dataTables.bootstrap.js' %}"></script>
+<script>
+var table;
+$(document).ready(function() {
+	table = $('#tblQuestion').DataTable({
+		dom: "<'table-responsive'tr>\n        <'row align-items-center'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7 d-flex justify-content-end'p>>",
+		language: {
+			paginate: {
+				"first":'<i class="fa fa-lg fa-angle-double-left"></i>',
+				"last":'<i class="fa fa-lg fa-angle-double-right"></i>',
+				'previous': '<i class="fa fa-lg fa-angle-left"></i>',
+				'next': '<i class="fa fa-lg fa-angle-right"></i>'
+			},
+			lengthMenu: "{% trans 'Hiển thị' %} _MENU_ ",
+			info: "{% trans 'Hiển thị'%} _START_ {% trans 'tới'%} _END_ {% trans 'trong'%} _TOTAL_ {% trans 'bản ghi'%}",
+		},
+		autoWidth: false,
+		deferRender: true,
+		sort : false,
+		lengthMenu: [10,20,40,50],
+		displayLength:20,
+	});
+	//Chosen Select
+	$("#slSubject").change(function(){
+		$.fn.loading.show();
+		window.location.href = "{% url 'quiz:question' %}?subject_id="+ $(this).val();
+	});
+	//
+	//
+	var question_id;
+	$('#tblQuestion tbody').on( 'click', 'tr', function () {
+		question_id = $(this).attr('id');
+		$("#tblQuestion tbody tr[id][id='"+ question_id +"']").css('background-color','#8EE2BC');
+		$("#tblQuestion tbody tr[id][id!='"+ question_id +"']").css('background-color','#fff');
+	});
+	//	first click
+	$('#tblQuestion tbody tr').first().click();
+});
+function getQuestionAnswer(question_id)
+{
+	var csrftoken = $.cookie('csrftoken');
+	var posting = $.post("{% url 'quiz:get_question_answer'%}", {
+		'csrfmiddlewaretoken' : csrftoken,
+		'question_id' : question_id,
+	});
+	$.fn.loading.show();
+	posting.done(function(data) 
+	{
+		if(data.handle=='error')
+			$.message.notification(data.msg,"center",{"class_name":"alert alert-danger"});
+		else if(data.handle=='success')
+		{
+			var tbody = $("#table2 tbody");
+			tbody.empty();
+			var customer_servers = data.customer_servers;
+			for(var i=0;i<customer_servers.length;i++)
+			{
+				var server = customer_servers[i];
+				var row = $('<tr></tr>');
+				row.append($('<td>'+server.server__name+'</td>'));
+				row.append($('<td>'+server.server__code+'</td>'));
+				row.append($('<td>'+server.server__name+'</td>'));
+				var action = $('<td  class="align-middle text-center" server_name="'+server.server__name+'" id="'+server.server_id+'"><a class="btn btn-sm btn-icon btn-secondary" href="#"><i class="fa fa-trash-o"></i></a></td>');
+				action.on('click',function(){
+					var server_id = $(this).attr("id");
+					var message = $.message. confirm ("Bạn muốn loại bỏ " + $(this).attr("server_name") +" ra khỏi danh sách");
+					message.on('message.confirm',function(){
+						//message.destroy();
+						unsignServerFromCustomer(customer_id,server_id)
+					});
+				});
+				row.append(action);
+				tbody.append(row);
+			}
+		}
+		$.fn.loading.hide();
+	});
+}
+function removeQuestion(question_id,question_name)
+{
+	confirm = $.message.confirm("{% trans 'Bạn muốn xóa câu hỏi'%} "+ question_name+' ? ');
+	confirm.on('message.confirm',function(){
+		var url = "{% url 'quiz:question_delete' 'p_question_id' %}".replace("p_question_id",question_id);
+		
+		$.fn.loading.show();
+		var csrftoken = $.cookie('csrftoken');
+		var posting = $.post(url, {
+			'csrfmiddlewaretoken' : csrftoken,
+		});
+		
+		posting.done(function(data) {
+			if(data.handle==='error')
+			{
+				$.message.error(data.msg,"center",{"class_name":"alert alert-danger"});
+			}
+			else if(data.handle==='success')
+			{
+				window.location.reload();
+			}
+			$.message.destroy();
+			$.fn.loading.hide();
+		});
+	});
+}
+
+</script>
+{% endblock scripts %}

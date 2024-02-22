@@ -5,7 +5,7 @@
 	<!-- .page-title-bar -->
 	<header class="page-title-bar">
 		<!-- page title stuff goes here -->
-		<h1 class="page-title">{% trans 'Môn học' %}</h1>
+		<h1 class="page-title">{{ data }} {% trans 'Môn học' %}</h1>
 	</header>
 	<!-- /.page-title-bar -->
 {% endblock main-header %}
@@ -47,6 +47,7 @@
 					<tr>
 						<th>{% trans 'Mã môn học'%}</th>
 						<th>{% trans 'Tên môn học'%}</th>
+						<th>{% trans 'Ngày tạo'%}</th>
 						<th class="text-center">{% trans 'Sửa|Xóa'%}</th>
 					</tr>
 				</thead>
@@ -55,6 +56,7 @@
 					<tr>
 						<td>{{ subject.code }}</td>
 						<td>{{ subject.name }}</td>
+						<td>{{ subject.create_date }}</td>
 						<td class="text-center">
 							<a class="btn btn-sm btn-icon btn-secondary" 
 								href="{% url 'quiz:subject_edit' subject.id %}">
@@ -65,6 +67,22 @@
 								onclick="removeSubject({{ subject.id }},'{{ subject.name }}');"><i class="fa fa-trash-o"></i></a>
 						</td>
 					</tr>
+					{% for question in subject.question_set.all %}
+					<tr>
+						<td>{{ question.id }}</td>
+						<td>{{ question.text }}</td>
+						<td>{{ subject.create_date }}</td>
+						<td class="text-center">
+							<a class="btn btn-sm btn-icon btn-secondary" 
+								href="{% url 'quiz:subject_edit' subject.id %}">
+									<i class="fa fa-pencil"></i>
+							</a>
+							
+							<a class="btn btn-sm btn-icon btn-secondary" href="#" 
+								onclick="removeSubject({{ subject.id }},'{{ subject.name }}');"><i class="fa fa-trash-o"></i></a>
+						</td>
+					</tr>
+					{% endfor %}
 					{% endfor %}
 				</tbody>
 			</table>
@@ -123,7 +141,9 @@ function removeSubject(subject_id,subject_name)
 		
 		posting.done(function(data) {
 			if(data.handle==='error')
+			{
 				$.message.notification(data.msg,"center",{"class_name":"alert alert-danger"});
+			}
 			else if(data.handle==='success')
 			{
 				window.location.reload();

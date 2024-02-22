@@ -19,6 +19,8 @@ app_name = 'quiz'
 urlpatterns = [
     path('', auth_views.home , name='home'),
     path('question/', question_views.index , name='question'),
+    path('question/answer/', question_views.get_question_answer , name='get_question_answer'),
+    path('question/delete/<str:question_id>/', question_views.delete , name='question_delete'),
     # subject
     path('subject/', subject_views.index , name='subject'),
     path('subject/add/', subject_views.add , name='subject_add'),
