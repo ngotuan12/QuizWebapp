@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-a1wih!smhz=*b-1@f)zbxxld4l@j4x3m3o582&*+4n#!@yk%hq
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -83,8 +83,8 @@ DATABASES = {
         'NAME': 'mse',
         'PORT': '3306',
         'HOST': '10.10.10.12',
-        'USER': 'mse',
-        'PASSWORD': 'Mse@Team1',
+        'USER': 'root',
+        'PASSWORD': 'Lienviet2019@123',
         'OPTIONS': {
           'autocommit': True,
         },
