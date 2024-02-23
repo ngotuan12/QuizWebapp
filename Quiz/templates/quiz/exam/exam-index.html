@@ -42,7 +42,7 @@
 		</div>
 		
 		<div class="card-body" style="font-size: 13px">
-			<table class="table table-hover" id="tbl-subject">
+			<table class="table table-hover" id="tbl-exam">
 				<thead>
 					<tr>
 						<th>{% trans 'Môn học'%}</th>
@@ -69,7 +69,6 @@
 								href="{% url 'quiz:exam_edit' exam.id %}">
 									<i class="fa fa-pencil"></i>
 							</a>
-							
 							<a class="btn btn-sm btn-icon btn-secondary" href="#" 
 								onclick="removeExam({{ exam.id }},'{{ exam.code }}');"><i class="fa fa-trash-o"></i></a>
 						</td>
@@ -81,3 +80,68 @@
 	</div>
 </div>
 {% endblock main-content %}
+{% block scripts %}
+<script src="{% static 'vendor/datatables/jquery.dataTables.min.js' %} "></script>
+<script src="{% static 'vendor/datatables/extensions/buttons/dataTables.buttons.min.js' %}"></script>
+<script src="{% static 'vendor/datatables/extensions/buttons/buttons.bootstrap4.min.js' %}"></script>
+<script src="{% static 'vendor/datatables/extensions/buttons/buttons.html5.min.js' %}"></script>
+<script src="{% static 'vendor/datatables/extensions/buttons/buttons.print.min.js' %}"></script>
+
+
+<script type="text/javascript">
+var table;
+$(document).ready(function() {
+	table = $('#tbl-exam').DataTable({
+		dom: "<'table-responsive'tr>\n        <'row align-items-center'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7 d-flex justify-content-end'p>>",
+		language: {
+			paginate: {
+				"first":'<i class="fa fa-lg fa-angle-double-left"></i>',
+				"last":'<i class="fa fa-lg fa-angle-double-right"></i>',
+				'previous': '<i class="fa fa-lg fa-angle-left"></i>',
+				'next': '<i class="fa fa-lg fa-angle-right"></i>'
+			},
+			lengthMenu: "{% trans 'Hiển thị' %} _MENU_ ",
+			info: "{% trans 'Hiển thị'%} _START_ {% trans 'tới'%} _END_ {% trans 'trong'%} _TOTAL_ {% trans 'bản ghi'%}",
+		},
+		autoWidth: false,
+		deferRender: true,
+		sort : false,
+		lengthMenu: [10,20,40,50],
+		displayLength:10,
+	});
+	
+	$('#table-search').on('keyup change', function (e) {
+		var value = $('#table-search').val(); 
+		table.search('').columns().search('').draw();
+		table.search(value).draw();
+	});
+});
+
+function removeExam(exam_id,exam_code)
+{
+	
+	var confirm = $.message.confirm("{% trans 'Bạn muốn xóa đề thi <strong>'%} "+ exam_code+'</strong> ? ');
+	confirm.on('message.confirm',function(){
+		var url = "{% url 'quiz:exam_delete' 'p_exam_id' %}".replace("p_exam_id",exam_id);
+		
+		$.fn.loading.show();
+		var csrftoken = $.cookie('csrftoken');
+		var posting = $.post(url, {
+			'csrfmiddlewaretoken' : csrftoken,
+		});
+		
+		posting.done(function(data) {
+			if(data.handle==='error')
+			{
+				$.message.notification(data.msg,"center",{"class_name":"alert alert-danger"});
+			}
+			else if(data.handle==='success')
+			{
+				window.location.reload();
+			}
+			$.fn.loading.hide();
+		});
+	});
+}
+</script>
+{% endblock scripts %}

@@ -19,6 +19,7 @@ app_name = 'quiz'
 urlpatterns = [
     path('', auth_views.home , name='home'),
     path('question/', question_views.index , name='question'),
+    path('question/import/', question_views.question_import , name='question_import'),
     path('question/answer/', question_views.get_question_answer , name='get_question_answer'),
     path('question/delete/<str:question_id>/', question_views.delete , name='question_delete'),
     # subject
@@ -31,6 +32,7 @@ urlpatterns = [
     path('exam/add', exam_views.add , name='exam_add'),
     path('exam/edit/<int:exam_id>/', exam_views.edit , name='exam_edit'),
     path('exam/delete/<str:exam_id>/', exam_views.delete , name='exam_delete'),
+    path('exam/question/random/load/', exam_views.load_random_exam_question , name='load_random_exam_question'),
     # 
     path('practice/', practice_views.index , name='practice'),
     path('history/', history_views.index , name='history'),

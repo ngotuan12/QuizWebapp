@@ -18,3 +18,6 @@ class Exam(models.Model):
     )
     class Meta:
         db_table = 'exam'
+        constraints = [
+        models.UniqueConstraint(fields=['code'], name='unique_exam_code')
+    ]

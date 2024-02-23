@@ -11,10 +11,183 @@
 {% endblock main-header %}
 {% block main-content %}
 <div class="page-section">
-	<div class="row">
-		<div class="col-sm" style="margin-left: 20px">
-			
+	<div class="card">
+		{% if has_error %}
+			<div class="card-header">
+				<label id="codeError" class="error" style="margin-top: 2%;margin-left: 3%;">{{ has_error }} </label>
+			</div>
+		{% endif %}
+		<div class="card-body">
+			<h3 class="card-title">{% trans 'Khai báo thông tin'%}</h3>
+			<form class="needs-validation" novalidate id="form" method="post" action="{{ app_path }}">
+				{% csrf_token %}
+				<input type="hidden" id="txtListQuestion" name="txtListQuestion" value="[]"/>
+				<div class="form-row">
+					<div class="col-md-12 mb-3">
+						<label for="slSubject">
+							{% trans 'Môn học'%}
+						</label>
+						<select class="custom-select" id="slSubject" name="slSubject" data-placeholder="Chọn môn học.." >
+							{% for subject in subjects %}
+								<option value="{{ subject.id }}" >{{ subject.name }}</option>
+							{% endfor %}
+						</select>
+					</div>
+					
+					
+				</div>
+				
+				<div class="form-row">
+					<div class="col-md-12 mb-3">
+						<label for="txtCode">
+							{% trans 'Mã đề thi'%}
+						</label>
+						<input type="text" class="form-control" id="txtCode" name="txtCode" 
+							placeholder="{% trans 'Mã đề thi'%}" required >
+						<div id="inputGroupPrepend" class="invalid-tooltip">
+									{% trans 'Hãy nhập chính xác mã đề thi'%}</div>
+					</div>
+				</div>
+				<div class="form-row">
+					<div class="col-md-6 mb-3">
+						<label for="txtNumQuestion">
+							Số câu hỏi
+						</label>
+						<input type="number" id="txtNumQuestion" name="txtNumQuestion" class="form-control" data-parsley-group="fieldset01" required="required" value="1">
+					</div>
+					
+					<div class="col-md-6 mb-3">
+						<label for="txtDuration">
+							Thời gian 
+						</label>
+						<input type="number" id="txtDuration" name="txtDuration" class="form-control" data-parsley-group="fieldset01" required="required" value="30">
+					</div>
+				</div>
+				<div class="form-actions justify-content-center">
+					
+					<button class="btn btn-success" id="submit"type="submit" style="width: 100px">{% trans 'Lưu'%}</button>
+					<a href="{% url 'quiz:exam'%}" type="button" class="btn btn-warning" style="width: 100px"> {% trans 'Trở về'%}</a>
+				</div>
+			</form>
+		</div>
+	</div>
+	
+	<div class="card card-fluid">
+		<div class="card-body">
+			<h3 class="card-title">{% trans 'Danh sách câu hỏi'%}</h3>
+			<div class="panel-btns" style="position: absolute;top: 5px;right: 5px;font-size: 24px">
+				<a href="#" class="btn btn-primary" id="makeQuestion" type="button" style="width: 100px">{% trans 'Tạo câu hỏi'%}</a>
+				<a href="#" class="panel-edit" id="btnUpRoute" style="padding-left: 10px">
+					<i id="btnUpRoute" class="fa fa-arrow-up"></i></a>
+				<a href="#" class="panel-edit" id="btnDownRoute" style="padding-right: 0">
+					<i id="btnDownRoute" class="fa fa-arrow-down"></i></a>
+			</div>
+			<table class="table table-hover" id="tblQuestion">
+				<thead>
+					<tr>
+						<th>{% trans '#'%}</th>
+						<th>{% trans 'Content'%}</th>
+						<th>{% trans 'Image'%}</th>
+						<th class="text-center">{% trans 'Xóa'%}</th>
+					</tr>
+				</thead>
+				
+				<tbody>
+					{% for question in exam_questions %}
+					<tr>
+						<td>{{ forloop.counter }}</td>
+						<td>{{ question.text }}</td>
+						<td>{{ question.image_name }}</td>
+						<td class="text-center">
+							<a class="btn btn-sm btn-icon btn-secondary" href="#" 
+								onclick="removeQuestion('{{ exam.id }}','{{ exam.code }}');"><i class="fa fa-trash-o"></i></a>
+						</td>
+					</tr>
+					{% endfor %}
+				</tbody>
+			</table>
 		</div>
 	</div>
 </div>
 {% endblock main-content %}
+
+{% block scripts %}
+<script>
+(function() {
+	'use strict';
+	window.addEventListener('load', function() {
+		// Fetch all the forms we want to apply custom Bootstrap validation styles to
+		var forms = document.getElementsByClassName('needs-validation');
+		// Loop over them and prevent submission
+		var validation = Array.prototype.filter.call(forms, function(form) {
+			form.addEventListener('submit', function(event) {
+				if (form.checkValidity() === false) {
+					event.preventDefault();
+					event.stopPropagation();
+				}
+				form.classList.add('was-validated');
+			}, false);
+		});
+		}, false);
+	})();
+$(document).ready(function() {
+	$('#makeQuestion').on('click',function(){
+		makeQuestion();
+	});
+})
+var questions = [];
+function makeQuestion()
+{
+	var csrftoken = $.cookie('csrftoken');
+	var subject_id = $('#slSubject').val();
+	var num_question = $('#txtNumQuestion').val();
+	var posting = $.post("{% url 'quiz:load_random_exam_question'%}", {
+		'csrfmiddlewaretoken' : csrftoken,
+		'subject_id' : subject_id,
+		'num_question':num_question,
+	});
+	$.fn.loading.show();
+	posting.done(function(data) 
+	{
+		if(data.handle=='error')
+			$.message.notification(data.msg,"center",{"class_name":"alert alert-danger"});
+		else if(data.handle=='success')
+		{
+			// question
+			questions = data.questions;
+			initQuestion();
+		}
+		$.fn.loading.hide();
+	});
+}
+
+function initQuestion()
+{
+	$("#txtListQuestion").val(JSON.stringify(questions))
+	var tbody = $("#tblQuestion tbody");
+	tbody.empty();
+	for(var i=0;i<questions.length;i++)
+	{
+		var question = questions[i];
+		var row = $('<tr></tr>');
+		row.append($('<td>'+(i+1)+'</td>'));
+		row.append($('<td>'+question.text+'</td>'));
+		row.append($('<td>'+question.image_name+'</td>'));
+		var action = $('<td  class="align-middle text-center" question_text="'+question.text +'" id="'+question.device__id+'"><a class="btn btn-sm btn-icon btn-secondary" href="#"><i class="fa fa-trash-o"></i></a></td>');
+		action.on('click',function(){
+			removeQuestion(row,question.id)
+		});
+		row.append(action);
+		tbody.append(row);
+	}
+}
+function removeQuestion(row,question_id)
+{
+	row.remove();
+	questions = questions.filter(x => {
+		return x.id != question_id;
+	});
+	initQuestion();
+}
+</script>
+{% endblock scripts %}
