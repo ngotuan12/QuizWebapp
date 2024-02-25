@@ -18,6 +18,10 @@ def home(request):
 def sign_out(request):
     auth.logout(request)
     return redirect('quiz:sign_in')
+@login_required()
+def permission_error(request, *args, **argv):
+    context = {}
+    return render(request, "auth/permission-error.html", context)
 
 def sign_in(request):
     context = {}

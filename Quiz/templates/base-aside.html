@@ -72,7 +72,9 @@
 							<!-- Môn học -->
 							<li class="menu-item"><a href="{% url 'quiz:subject' %}" class="menu-link">{% trans 'Môn học' %}</a></li>
 							<!-- Câu hỏi -->
+							{% if perms.Quiz.import_question %}
 							<li class="menu-item"><a href="{% url 'quiz:question' %}" class="menu-link">{% trans 'Câu hỏi' %}</a></li>
+							{% endif %}
 							<!-- Đề thi -->
 							<li class="menu-item"><a href="{% url 'quiz:exam' %}" class="menu-link">{% trans 'Đề thi' %}</a></li>
 						</ul> 

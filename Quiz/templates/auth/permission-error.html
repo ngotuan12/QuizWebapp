@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% load static %}
+{% load i18n %}
+{% block main-content %}
+<main class="app-main">
+<div class="wrapper">
+	<div id="notfound-state" class="empty-state">
+		<div class="empty-state-container">
+			<div class="state-figure">
+				<img class="img-fluid" src="{% static 'illustration/img-7.svg' %}"
+					alt="" style="max-width: 300px">
+			</div>
+			<h1>403!</h1>
+			<h3 class="state-header">{% trans 'Bạn không có quyền truy cập vào trang này!' %}</h3>
+			<p class="state-description lead text-muted">
+				{% trans 'Hãy liên lạc với quản trị hệ thống.' %}
+			</p>
+			<div class="state-action">
+				<a class="btn btn-lg btn-light" href="{% url 'quiz:home' %}"> <span class="fa fa-home"> </span> {% trans 'Trang chủ' %} </a>
+				{% if request.GET.next %}
+				<a class="btn btn-lg btn-light" href="{{ request.GET.next }}"> <span class="fa fa-refresh"> </span> {% trans 'Thử lại' %} </a> 
+				{% endif %}
+				
+			</div>
+		</div>
+	</div>
+</div>
+</main>
+{% endblock main-content %}

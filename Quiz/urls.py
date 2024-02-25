@@ -39,4 +39,5 @@ urlpatterns = [
     path('certificate/', certificate_views.index , name='certificate'),
     path('sign/out/', auth_views.sign_out , name='sign_out'),
     path('sign/in/', auth_views.sign_in , name='sign_in'),
+    path('permission-error/',auth_views.permission_error, name='permission_error'),
     ]

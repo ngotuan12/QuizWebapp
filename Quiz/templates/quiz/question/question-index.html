@@ -62,7 +62,10 @@
 							{% for question in questions %}
 							<tr id="{{ question.id }}">
 								<td>{{ question.text }}</td>
-								<td>{{ STATIC_URL }}{{ question.image_name }}</td>
+								
+								<td>
+								<a href="#" class="tile tile-img mr-1"><img class="img-fluid" src="/{{ STATIC_URL }}{{ question.image_name }}" alt="Card image cap"></a>
+								</td>
 								<td class="text-center">
 									<a class="btn btn-sm btn-icon btn-secondary" 
 										href="">
