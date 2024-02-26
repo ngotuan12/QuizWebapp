@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-a1wih!smhz=*b-1@f)zbxxld4l@j4x3m3o582&*+4n#!@yk%hq'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -127,6 +127,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = 'static/'
+STATIC_ROOT = '/usr/local/apps/QuizWebapp/Quiz/static/'
 STATICFILES_DIRS = [
     BASE_DIR / "Quiz" /"static",
     os.path.join(BASE_DIR, 'Quiz','static'),
