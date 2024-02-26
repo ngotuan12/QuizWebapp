@@ -129,8 +129,8 @@ USE_TZ = True
 STATIC_URL = 'static/'
 STATIC_ROOT = '/usr/local/apps/QuizWebapp/Quiz/static/'
 STATICFILES_DIRS = [
-    BASE_DIR / "Quiz" /"static",
-    os.path.join(BASE_DIR, 'Quiz','static'),
+    # BASE_DIR / "Quiz" /"static",
+    # os.path.join(BASE_DIR, 'Quiz','static'),
 ]
 # STATIC_ROOT = os.path.join(BASE_DIR, 'Quiz' ,'static')
 # Default primary key field type
