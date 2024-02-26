@@ -21,6 +21,7 @@ from Quiz.models.Subject import Subject
 from Quiz.test import BASE_DIR
 from Quiz.util.DateEncoder import DateTimeEncoder
 from QuizWebapp import settings
+from Quiz.models.ExamQuestion import ExamQuestion
 
 
 @login_required()
@@ -75,6 +76,9 @@ def load_subject_question(request):
 @login_required()
 def delete(request,question_id):
     try:
+        # exam question
+        exam_questions = ExamQuestion.objects.filter(question_id = question_id)
+        exam_questions.delete()
         # answer
         answers = Answer.objects.filter(question_id = question_id)
         answers.delete()
@@ -99,7 +103,7 @@ def handle_uploaded_file(f,strTime,strType,subject_id):
 def readDocx(file_name,subject_id,strTime):
     questions = []
     lines = list()
-    filename, file_extension = os.path.splitext('/path/to/somefile.ext')
+    fname, file_extension = os.path.splitext(file_name)
     if file_extension!= '.docx':
         raise Exception("Sorry, incorrect file format")
     doc = Document(file_name)
