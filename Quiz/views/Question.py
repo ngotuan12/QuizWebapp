@@ -10,18 +10,18 @@ import re
 
 from django.contrib.auth.decorators import login_required, permission_required
 from django.http.response import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect, resolve_url
 from django.template.context import RequestContext
 from django.views.decorators.http import require_http_methods
 from docx import Document
 
 from Quiz.models.Answer import Answer
+from Quiz.models.ExamQuestion import ExamQuestion
 from Quiz.models.Question import Question
 from Quiz.models.Subject import Subject
 from Quiz.test import BASE_DIR
 from Quiz.util.DateEncoder import DateTimeEncoder
 from QuizWebapp import settings
-from Quiz.models.ExamQuestion import ExamQuestion
 
 
 @login_required()
@@ -38,6 +38,7 @@ def question_import(request):
             images = request.FILES.getlist("listImageFile")
             for image in images:
                 handle_uploaded_file(image,strTime,"image",subject_id)
+            return redirect(resolve_url('quiz:question'))
     except Exception as ex:
         context.update({'has_error':str(ex)})
     return render(request, "quiz/question/question-import.html", context)
