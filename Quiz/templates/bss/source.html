@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load static %}
+{% block main-header %}
+	<!-- .page-title-bar -->
+	<header class="page-title-bar">
+		<!-- page title stuff goes here -->
+		<h1 class="page-title">{% trans 'Lấy mẫu' %}</h1>
+	</header>
+	<!-- /.page-title-bar -->
+{% endblock main-header %}
+
+{% block main-content %}
+<div class="page-section">
+	<form action="{{ app_path }}" enctype='multipart/form-data' method="post">
+		{% csrf_token %}
+		<div class="row">
+			<div class="col-12 col-lg-6 col-xl-12">
+				<div class="card card-fluid">
+					<div class="card-body">
+						<div class="form-group">
+							<label for="audio_1">Tải lên mẫu 1</label>
+							<div class="custom-file">
+								<input accept=".wav" name="audio_1" type="file" class="custom-file-input" id="audio_1"> <label class="custom-file-label" for="audio_1">Choose file</label>
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<label for="audio_2">Tải lên mẫu 2</label>
+							<div class="custom-file">
+								<input accept=".wav" name="audio_2" type="file" class="custom-file-input" id="audio_2"> <label class="custom-file-label" for="audio_2">Choose file</label>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<div class="col-12 col-lg-6 col-xl-12 mb-4">
+				<div class="form-actions justify-content-center">
+					<button class="btn btn-primary" id="submit"type="submit" style="width: 100px">{% trans 'Import'%}</button>
+				</div>
+			</div>
+			
+			<div class="col-12 col-lg-6 col-xl-6">
+				<div class="card card-fluid">
+					<div class="card-header"> Mẫu 1 </div>
+					<div class="card card-figure" style="height: 480px">
+						<!-- .card-figure -->
+						<figure class="figure">
+							<!-- .figure-img -->
+							<div class="figure-img figure-attachment" style="height: 480px">
+								<img src="{% static 'upload/audio_3_signal.png' %}"
+									alt="Figure" style="padding: 10px"/> <a
+									href="{% static 'upload/audio_3_signal.png' %}"
+									class="img-link" data-size="640x480"><span
+									class="tile tile-circle bg-danger"><span
+										class="oi oi-eye"></span></span> <span class="img-caption d-none">Card
+										image cap</span></a>
+							</div>
+						</figure>
+						<!-- /.card-figure -->
+					</div>
+				</div>
+			</div>
+			
+			<div class="col-12 col-lg-6 col-xl-6">
+				<div class="card card-fluid">
+					<div class="card-header"> Mẫu 2 </div>
+					<div class="card card-figure" style="height: 480px">
+						<!-- .card-figure -->
+						<figure class="figure">
+							<!-- .figure-img -->
+							<div class="figure-img figure-attachment" style="height: 480px">
+								<img src="{% static 'upload/audio_3_signal.png' %}"
+									alt="Figure" style="padding: 10px"/> <a
+									href="{% static 'upload/audio_3_signal.png' %}"
+									class="img-link" data-size="640x480"><span
+									class="tile tile-circle bg-danger"><span
+										class="oi oi-eye"></span></span> <span class="img-caption d-none">Card
+										image cap</span></a>
+							</div>
+						</figure>
+						<!-- /.card-figure -->
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
+{% endblock main-content %}

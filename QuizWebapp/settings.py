@@ -82,9 +82,9 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'mse',
         'PORT': '3306',
-        'HOST': '10.10.10.12',
+        'HOST': '10.10.2.8',
         'USER': 'root',
-        'PASSWORD': 'Lienviet2019@123',
+        'PASSWORD': 'Mse2024@123',
         'OPTIONS': {
           'autocommit': True,
         },

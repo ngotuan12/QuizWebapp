@@ -9,6 +9,7 @@ from Quiz.views import Authentication as auth_views
 from Quiz.views import Question as question_views
 from Quiz.views import Subject as subject_views
 from Quiz.views import Exam as exam_views
+from Quiz.views import bss as bss_views
 
 from Quiz.views import Practice as practice_views
 from Quiz.views import History as history_views
@@ -33,11 +34,15 @@ urlpatterns = [
     path('exam/edit/<int:exam_id>/', exam_views.edit , name='exam_edit'),
     path('exam/delete/<str:exam_id>/', exam_views.delete , name='exam_delete'),
     path('exam/question/random/load/', exam_views.load_random_exam_question , name='load_random_exam_question'),
+    # BSS
+    path('bss/source', bss_views.source, name='bss_source'),
+    path('bss/source/mix', bss_views.source_mix, name='bss_source_mix'),
+    path('bss/source/separation', bss_views.source_separation, name='bss_source_separation'),
     # 
     path('practice/', practice_views.index , name='practice'),
     path('history/', history_views.index , name='history'),
     path('certificate/', certificate_views.index , name='certificate'),
     path('sign/out/', auth_views.sign_out , name='sign_out'),
     path('sign/in/', auth_views.sign_in , name='sign_in'),
-    path('permission-error/',auth_views.permission_error, name='permission_error'),
+    path('permission-error/', auth_views.permission_error, name='permission_error'),
     ]

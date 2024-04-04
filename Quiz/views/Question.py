@@ -11,7 +11,6 @@ import re
 from django.contrib.auth.decorators import login_required, permission_required
 from django.http.response import HttpResponse
 from django.shortcuts import render, redirect, resolve_url
-from django.template.context import RequestContext
 from django.views.decorators.http import require_http_methods
 from docx import Document
 
@@ -19,9 +18,9 @@ from Quiz.models.Answer import Answer
 from Quiz.models.ExamQuestion import ExamQuestion
 from Quiz.models.Question import Question
 from Quiz.models.Subject import Subject
-from Quiz.test import BASE_DIR
 from Quiz.util.DateEncoder import DateTimeEncoder
 from QuizWebapp import settings
+from QuizWebapp.settings import BASE_DIR
 
 
 @login_required()
