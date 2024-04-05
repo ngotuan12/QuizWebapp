@@ -144,11 +144,12 @@ def separation():
     os.remove(separation_path_1) if os.path.exists(separation_path_1) else None
     shutil.copyfile(os.path.join(folder_path, file_name_1 + '.wav'), separation_path_1)
     folder_path = os.path.join(BASE_DIR, 'Quiz', 'static', 'upload')
-    file_name_2 = 'audio_2'
-    separation_audio_2 = 'separation_audio_2'
-    separation_path_2 = os.path.join(folder_path, separation_audio_2 + '.wav')
-    os.remove(separation_path_2) if os.path.exists(separation_path_2) else None
-    shutil.copyfile(os.path.join(folder_path, file_name_2 + '.wav'), separation_path_2)
+    #
+    file_name_1 = 'audio_2'
+    separation_audio_1 = 'separation_audio_2'
+    separation_path_1 = os.path.join(folder_path, separation_audio_1 + '.wav')
+    os.remove(separation_path_1) if os.path.exists(separation_path_1) else None
+    shutil.copyfile(os.path.join(folder_path, file_name_1 + '.wav'), separation_path_1)
     #
     file_name_1 = 'signal_real_audio_1'
     separation_audio_1 = 'separation_signal_1'
