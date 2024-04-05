@@ -36,8 +36,8 @@ urlpatterns = [
     path('exam/question/random/load/', exam_views.load_random_exam_question , name='load_random_exam_question'),
     # BSS
     path('bss/source', bss_views.source, name='bss_source'),
-    path('bss/source/mix', bss_views.source_mix, name='bss_source_mix'),
-    path('bss/source/separation', bss_views.source_separation, name='bss_source_separation'),
+    path('bss/source_mix', bss_views.source_mix, name='bss_source_mix'),
+    path('bss/source_separation', bss_views.source_separation, name='bss_source_separation'),
     # 
     path('practice/', practice_views.index , name='practice'),
     path('history/', history_views.index , name='history'),

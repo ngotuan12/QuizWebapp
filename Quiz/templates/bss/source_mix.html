@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load static %}
+{% block main-header %}
+	<header class="page-title-bar">
+		<h1 class="page-title">{% trans 'Trộn mẫu' %}</h1>
+	</header>
+{% endblock main-header %}
+{% block main-content %}
+<div class="page-section">
+	<form action="{{ app_path }}" method="post">
+		{% csrf_token %}
+		<div class="row">
+			<div class="col-12 col-lg-6 col-xl-6">
+				<div class="card card-fluid">
+					<div class="card-header"> Mẫu 1 </div>
+					<div class="card card-figure" style="height: 480px">
+						<!-- .card-figure -->
+						<figure class="figure">
+							<!-- .figure-img -->
+							<div class="figure-img figure-attachment" style="height: 480px">
+								<img src="{% static 'upload/signal_audio_1.png' %}"
+									alt="Figure" style="padding: 10px"/> <a
+									href="{% static 'upload/signal_audio_1.png' %}"
+									class="img-link" data-size="640x480"><span
+									class="tile tile-circle bg-danger"><span
+										class="oi oi-eye"></span></span> <span class="img-caption d-none">Card
+										image cap</span></a>
+							</div>
+						</figure>
+						<!-- /.card-figure -->
+					</div>
+					<div class="card card-body">
+						<audio controls="controls">
+							<source type="audio/wav" src="{% static 'upload/new_audio_1.wav' %}">
+						</audio>
+					</div>
+				</div>
+			</div>
+			
+			<div class="col-12 col-lg-6 col-xl-6">
+				<div class="card card-fluid">
+					<div class="card-header"> Mẫu 2 </div>
+					<div class="card card-figure" style="height: 480px">
+						<!-- .card-figure -->
+						<figure class="figure">
+							<!-- .figure-img -->
+							<div class="figure-img figure-attachment" style="height: 480px">
+								<img src="{% static 'upload/signal_audio_2.png' %}"
+									alt="Figure" style="padding: 10px"/> <a
+									href="{% static 'upload/signal_audio_2.png' %}"
+									class="img-link" data-size="640x480"><span
+									class="tile tile-circle bg-danger"><span
+										class="oi oi-eye"></span></span> <span class="img-caption d-none">Card
+										image cap</span></a>
+							</div>
+						</figure>
+						<!-- /.card-figure -->
+					</div>
+					<div class="card card-body">
+						<audio controls="controls">
+							<source type="audio/wav" src="{% static 'upload/new_audio_2.wav' %}">
+						</audio>
+					</div>
+				</div>
+			</div>
+			
+			<div class="col-12 col-lg-6 col-xl-12 mb-4">
+				<div class="form-actions justify-content-center">
+					<button class="btn btn-primary" id="submit"type="submit" style="width: 100px">{% trans 'Mix Source'%}</button>
+				</div>
+			</div>
+			
+			<div class="col-12 col-lg-6 col-xl-12">
+				<div class="card card-fluid">
+					<div class="card-header"> Mẫu 2 </div>
+					<div class="card card-figure" style="height: 480px;width: 620px">
+						<!-- .card-figure -->
+						<figure class="figure">
+							<!-- .figure-img -->
+							<div class="figure-img figure-attachment" style="height: 480px">
+								<img src="{% static 'upload/mix_signal_1.png' %}"
+									alt="Figure" style="padding: 10px"/> <a
+									href="{% static 'upload/mix_signal_1.png' %}"
+									class="img-link" data-size="640x480"><span
+									class="tile tile-circle bg-danger"><span
+										class="oi oi-eye"></span></span> <span class="img-caption d-none">Card
+										image cap</span></a>
+							</div>
+						</figure>
+						<!-- /.card-figure -->
+					</div>
+					<div class="card card-body">
+						<audio controls="controls">
+							<source type="audio/wav" src="{% static 'upload/audio_mix_1.wav' %}">
+						</audio>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
+{% endblock main-content %}
+	
