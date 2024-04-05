@@ -111,8 +111,8 @@ def mix_source():
     """
     The function numpy.c_ concatenates the numpy arrays given as input.
     The method numpy_array.T is the transpose operation that allow us
-    to prepare an input source matrix of the right size (3, length),
-    according to the chosen mixing matrix (3,3).
+    to prepare an input source matrix of the right size (2, length),
+    according to the chosen mixing matrix (2,2).
     """
     S = (np.c_[s1, s2]).T
     # Mixing Matrix
@@ -162,3 +162,60 @@ def separation():
     separation_path_1 = os.path.join(folder_path, separation_audio_1 + '.png')
     os.remove(separation_path_1) if os.path.exists(separation_path_1) else None
     shutil.copyfile(os.path.join(folder_path, file_name_1 + '.png'), separation_path_1)
+def center(x):
+    x = np.array(x)
+    return x - x.mean(axis=1, keepdims=True)
+
+def whiten(x):
+    eigen_values, eigen_vectors = np.linalg.eigh(np.cov(x))
+    D = np.diag(eigen_values)
+    sqrt_inverse_D = np.sqrt(np.linalg.inv(D))
+    x_whiten = eigen_vectors @ (sqrt_inverse_D @ (eigen_vectors.T @ x))
+    
+    print(f'Shape of Eigen Values: {eigen_values.shape}, Eigen Vectors: {eigen_vectors.shape}, Whitened Data: {x_whiten.shape}')
+    
+    return x_whiten, D, eigen_vectors
+def objFunc(x):
+    return np.tanh(x)
+
+def dObjFunc(x):
+    return 1 - (objFunc(x) ** 2)
+
+def calc_w_hat(W, X):
+    # Implementation of the eqn. Towards Convergence
+    w_hat = (X * objFunc(W.T @ X)).mean(axis=1) - dObjFunc(W.T @ X).mean() * W
+    w_hat /= np.sqrt((w_hat ** 2).sum())
+    
+    return w_hat
+def ica(X, iterations, tolerance=1e-5):
+    num_components = X.shape[0]
+    
+    W = np.zeros((num_components, num_components), dtype=X.dtype)
+    distances = {i: [] for i in range(num_components)}
+    
+    for i in np.arange(num_components):
+        w = np.random.rand(num_components)
+        for j in np.arange(iterations):
+            w_new = calc_w_hat(w, X)
+            if(i >= 1):
+                w_new -= np.dot(np.dot(w_new, W[:i].T), W[:i])
+            distance = np.abs(np.abs((w * w_new).sum()) - 1)
+            
+            w = w_new
+            if(distance < tolerance):
+                print(f'Convergence attained for the {i+1}/{num_components} component.')
+                print(f'Component: {i+1}/{num_components}, Step: {j}/{iterations}, Distance: {distance}\n')
+            
+                break;
+                
+            distances[i].append(distance)
+            
+            if(j % 50 == 0):
+                print(f'Component: {i+1}/{num_components}, Step: {j}/{iterations}, Distance: {distance}')
+            
+            
+                
+        W[i, :] = w
+    S = np.dot(W, X)
+    
+    return S, distances

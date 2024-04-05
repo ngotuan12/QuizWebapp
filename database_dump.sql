@@ -1,8 +1,10 @@
--- MySQL dump 10.13  Distrib 8.0.36, for Win64 (x86_64)
+CREATE DATABASE  IF NOT EXISTS `mse` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
+USE `mse`;
+-- MySQL dump 10.13  Distrib 8.0.34, for Win64 (x86_64)
 --
--- Host: 10.10.10.12    Database: mse
+-- Host: 10.10.2.8    Database: mse
 -- ------------------------------------------------------
--- Server version	8.0.20
+-- Server version	8.0.36
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -31,7 +33,7 @@ CREATE TABLE `answer` (
   PRIMARY KEY (`id`),
   KEY `answer_question_id_523c1648_fk_question_id` (`question_id`),
   CONSTRAINT `answer_question_id_523c1648_fk_question_id` FOREIGN KEY (`question_id`) REFERENCES `question` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -55,7 +57,7 @@ CREATE TABLE `auth_group` (
   `name` varchar(150) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -84,7 +86,7 @@ CREATE TABLE `auth_group_permissions` (
   KEY `auth_group_permissio_permission_id_84c5c92e_fk_auth_perm` (`permission_id`),
   CONSTRAINT `auth_group_permissio_permission_id_84c5c92e_fk_auth_perm` FOREIGN KEY (`permission_id`) REFERENCES `auth_permission` (`id`),
   CONSTRAINT `auth_group_permissions_group_id_b120cbf9_fk_auth_group_id` FOREIGN KEY (`group_id`) REFERENCES `auth_group` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -112,7 +114,7 @@ CREATE TABLE `auth_permission` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `auth_permission_content_type_id_codename_01ab375a_uniq` (`content_type_id`,`codename`),
   CONSTRAINT `auth_permission_content_type_id_2f476e4b_fk_django_co` FOREIGN KEY (`content_type_id`) REFERENCES `django_content_type` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=51 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=51 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -146,7 +148,7 @@ CREATE TABLE `auth_user` (
   `date_joined` datetime(6) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -155,7 +157,7 @@ CREATE TABLE `auth_user` (
 
 LOCK TABLES `auth_user` WRITE;
 /*!40000 ALTER TABLE `auth_user` DISABLE KEYS */;
-INSERT INTO `auth_user` VALUES (1,'pbkdf2_sha256$720000$8yLKcWm3wDnJVtBdjMBCCo$Mf+nVGhv20Ag7z8SCRfC+MXw1qR9VJ515AhOkJ2ZX44=','2024-02-23 13:40:57.934278',1,'tuanna','Ngô Anh','Tuấn','tuan23mse13141@fsb.edu.vn',1,1,'2024-02-06 02:23:04.000000'),(2,'pbkdf2_sha256$720000$f1IYLRnDCUPKM6AX0xTITi$68rq/Fmq1kPnb0VpucFuorB9NJ33d0C8TdZZiwzrH7M=','2024-02-23 13:28:32.292413',0,'cuongnm','','','cuongnm@gmail.com',1,1,'2024-02-23 13:17:34.000000');
+INSERT INTO `auth_user` VALUES (1,'pbkdf2_sha256$720000$8yLKcWm3wDnJVtBdjMBCCo$Mf+nVGhv20Ag7z8SCRfC+MXw1qR9VJ515AhOkJ2ZX44=','2024-04-05 12:53:26.473467',1,'tuanna','Ngô Anh','Tuấn','tuan23mse13141@fsb.edu.vn',1,1,'2024-02-06 02:23:04.000000'),(2,'pbkdf2_sha256$720000$f1IYLRnDCUPKM6AX0xTITi$68rq/Fmq1kPnb0VpucFuorB9NJ33d0C8TdZZiwzrH7M=','2024-02-23 13:28:32.292413',0,'cuongnm','','','cuongnm@gmail.com',1,1,'2024-02-23 13:17:34.000000');
 /*!40000 ALTER TABLE `auth_user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -175,7 +177,7 @@ CREATE TABLE `auth_user_groups` (
   KEY `auth_user_groups_group_id_97559544_fk_auth_group_id` (`group_id`),
   CONSTRAINT `auth_user_groups_group_id_97559544_fk_auth_group_id` FOREIGN KEY (`group_id`) REFERENCES `auth_group` (`id`),
   CONSTRAINT `auth_user_groups_user_id_6a12ed8b_fk_auth_user_id` FOREIGN KEY (`user_id`) REFERENCES `auth_user` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -203,7 +205,7 @@ CREATE TABLE `auth_user_user_permissions` (
   KEY `auth_user_user_permi_permission_id_1fbb5f2c_fk_auth_perm` (`permission_id`),
   CONSTRAINT `auth_user_user_permi_permission_id_1fbb5f2c_fk_auth_perm` FOREIGN KEY (`permission_id`) REFERENCES `auth_permission` (`id`),
   CONSTRAINT `auth_user_user_permissions_user_id_a95ead1b_fk_auth_user_id` FOREIGN KEY (`user_id`) REFERENCES `auth_user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -237,7 +239,7 @@ CREATE TABLE `django_admin_log` (
   CONSTRAINT `django_admin_log_content_type_id_c4bce8eb_fk_django_co` FOREIGN KEY (`content_type_id`) REFERENCES `django_content_type` (`id`),
   CONSTRAINT `django_admin_log_user_id_c564eba6_fk_auth_user_id` FOREIGN KEY (`user_id`) REFERENCES `auth_user` (`id`),
   CONSTRAINT `django_admin_log_chk_1` CHECK ((`action_flag` >= 0))
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -263,7 +265,7 @@ CREATE TABLE `django_content_type` (
   `model` varchar(100) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `django_content_type_app_label_model_76bd3d3b_uniq` (`app_label`,`model`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -289,7 +291,7 @@ CREATE TABLE `django_migrations` (
   `name` varchar(255) NOT NULL,
   `applied` datetime(6) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -315,7 +317,7 @@ CREATE TABLE `django_session` (
   `expire_date` datetime(6) NOT NULL,
   PRIMARY KEY (`session_key`),
   KEY `django_session_expire_date_a5c62663` (`expire_date`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -324,7 +326,7 @@ CREATE TABLE `django_session` (
 
 LOCK TABLES `django_session` WRITE;
 /*!40000 ALTER TABLE `django_session` DISABLE KEYS */;
-INSERT INTO `django_session` VALUES ('m707w1ihwiem6p9495h4xa4stdm0ri5m','.eJxVjMsOwiAQRf-FtSFMeBWX7v0GMsOAVA0kpV0Z_12bdKHbe865LxFxW2vcRl7izOIsQJx-N8L0yG0HfMd26zL1ti4zyV2RBx3y2jk_L4f7d1Bx1G9t0CkCUqXoAMknO4ViQZdE4DOg0VrB5CyTT5l1ZhccFwzGeaairRfvD-kGODo:1rcIXP:ezkHgvmV5zsxto12OWXm4IrLYCXqg0mKNuOmbUHOykE','2024-03-05 05:19:27.815712'),('ql07ow42ffmq6an4tgvwk2tgfi3f3dce','.eJxVjMsOwiAQRf-FtSFMeBWX7v0GMsOAVA0kpV0Z_12bdKHbe865LxFxW2vcRl7izOIsQJx-N8L0yG0HfMd26zL1ti4zyV2RBx3y2jk_L4f7d1Bx1G9t0CkCUqXoAMknO4ViQZdE4DOg0VrB5CyTT5l1ZhccFwzGeaairRfvD-kGODo:1rdVnO:7gVYGTa1eC1roTb1QvfSlHK12V4qp7w3tUJ8Tw-aAOE','2024-03-08 13:40:58.013915');
+INSERT INTO `django_session` VALUES ('4809q7nfq39ges213sqmc1kzkn07gxn1','.eJxVjMsOwiAQRf-FtSFMeBWX7v0GMsOAVA0kpV0Z_12bdKHbe865LxFxW2vcRl7izOIsQJx-N8L0yG0HfMd26zL1ti4zyV2RBx3y2jk_L4f7d1Bx1G9t0CkCUqXoAMknO4ViQZdE4DOg0VrB5CyTT5l1ZhccFwzGeaairRfvD-kGODo:1rshNA:o_M8RHG_VcUjEM7ERJu0gkKW1o_fStuKldXtOkBtBKs','2024-04-19 11:04:40.321959'),('7utnft2pvki9qzwqlyc5ol7pwgx7sdk9','.eJxVjMsOwiAQRf-FtSFMeBWX7v0GMsOAVA0kpV0Z_12bdKHbe865LxFxW2vcRl7izOIsQJx-N8L0yG0HfMd26zL1ti4zyV2RBx3y2jk_L4f7d1Bx1G9t0CkCUqXoAMknO4ViQZdE4DOg0VrB5CyTT5l1ZhccFwzGeaairRfvD-kGODo:1rsgsF:iYc3Lr4aXa9E2iykdrDxkGZt2lqGG7GWLSRnoeMkyjI','2024-04-19 10:32:43.221571'),('adjktijgat1oapk0zlgdc2mub6dbg2rs','.eJxVjMsOwiAQRf-FtSFMeBWX7v0GMsOAVA0kpV0Z_12bdKHbe865LxFxW2vcRl7izOIsQJx-N8L0yG0HfMd26zL1ti4zyV2RBx3y2jk_L4f7d1Bx1G9t0CkCUqXoAMknO4ViQZdE4DOg0VrB5CyTT5l1ZhccFwzGeaairRfvD-kGODo:1rsfnG:HbExti5R49yE2Fo9SdRuzpWAvnQe3-GI5AfAgQF48f0','2024-04-19 09:23:30.623432'),('etk7nlt641ic2relhqbxu4b3tlrqc12r','.eJxVjMsOwiAQRf-FtSFMeBWX7v0GMsOAVA0kpV0Z_12bdKHbe865LxFxW2vcRl7izOIsQJx-N8L0yG0HfMd26zL1ti4zyV2RBx3y2jk_L4f7d1Bx1G9t0CkCUqXoAMknO4ViQZdE4DOg0VrB5CyTT5l1ZhccFwzGeaairRfvD-kGODo:1rsNQb:_ChK1EB0yfuJAH8FZFLZDKiDjxxeK9LsRaDWaOFmiUY','2024-04-18 13:46:53.676825'),('h5ecu0j0e7fmf4bqpd5w1c7mkpclgfgu','.eJxVjMsOwiAQRf-FtSFMeBWX7v0GMsOAVA0kpV0Z_12bdKHbe865LxFxW2vcRl7izOIsQJx-N8L0yG0HfMd26zL1ti4zyV2RBx3y2jk_L4f7d1Bx1G9t0CkCUqXoAMknO4ViQZdE4DOg0VrB5CyTT5l1ZhccFwzGeaairRfvD-kGODo:1rsj4Q:zD7jHREzJ7c9amTKmv0vRAwWPSyB-D-v712mwsFDC7k','2024-04-19 12:53:26.475171'),('m707w1ihwiem6p9495h4xa4stdm0ri5m','.eJxVjMsOwiAQRf-FtSFMeBWX7v0GMsOAVA0kpV0Z_12bdKHbe865LxFxW2vcRl7izOIsQJx-N8L0yG0HfMd26zL1ti4zyV2RBx3y2jk_L4f7d1Bx1G9t0CkCUqXoAMknO4ViQZdE4DOg0VrB5CyTT5l1ZhccFwzGeaairRfvD-kGODo:1rcIXP:ezkHgvmV5zsxto12OWXm4IrLYCXqg0mKNuOmbUHOykE','2024-03-05 05:19:27.815712'),('okhg4zwclww47htt10rnxnqf91fpeb3t','.eJxVjMsOwiAQRf-FtSFMeBWX7v0GMsOAVA0kpV0Z_12bdKHbe865LxFxW2vcRl7izOIsQJx-N8L0yG0HfMd26zL1ti4zyV2RBx3y2jk_L4f7d1Bx1G9t0CkCUqXoAMknO4ViQZdE4DOg0VrB5CyTT5l1ZhccFwzGeaairRfvD-kGODo:1rsI4I:78hUGJJ3pitO7WiZ9jFPVfFBhjhUwRKpTVYe_IFh-0I','2024-04-18 08:03:30.655110'),('pfkqo99wb77b0jxpqpidxte2zxhe1cna','.eJxVjMsOwiAQRf-FtSFMeBWX7v0GMsOAVA0kpV0Z_12bdKHbe865LxFxW2vcRl7izOIsQJx-N8L0yG0HfMd26zL1ti4zyV2RBx3y2jk_L4f7d1Bx1G9t0CkCUqXoAMknO4ViQZdE4DOg0VrB5CyTT5l1ZhccFwzGeaairRfvD-kGODo:1rsfyX:_7NVxZ3FS5jvq3XnJzZ2SYmHNAUuAjpVVXJUdJF3z-k','2024-04-19 09:35:09.318343'),('ql07ow42ffmq6an4tgvwk2tgfi3f3dce','.eJxVjMsOwiAQRf-FtSFMeBWX7v0GMsOAVA0kpV0Z_12bdKHbe865LxFxW2vcRl7izOIsQJx-N8L0yG0HfMd26zL1ti4zyV2RBx3y2jk_L4f7d1Bx1G9t0CkCUqXoAMknO4ViQZdE4DOg0VrB5CyTT5l1ZhccFwzGeaairRfvD-kGODo:1rdVnO:7gVYGTa1eC1roTb1QvfSlHK12V4qp7w3tUJ8Tw-aAOE','2024-03-08 13:40:58.013915'),('wo15tpf2m1ynycvxgubyosx16yilck8z','.eJxVjMsOwiAQRf-FtSFMeBWX7v0GMsOAVA0kpV0Z_12bdKHbe865LxFxW2vcRl7izOIsQJx-N8L0yG0HfMd26zL1ti4zyV2RBx3y2jk_L4f7d1Bx1G9t0CkCUqXoAMknO4ViQZdE4DOg0VrB5CyTT5l1ZhccFwzGeaairRfvD-kGODo:1rsNUS:tef-_eSHVL12LMDzpfBN1I-_fU83u_btLdZ0Q0d7VSs','2024-04-18 13:50:52.953524'),('zh8cr184pxzq8h0del1nfhy8gbdeoc8h','.eJxVjMsOwiAQRf-FtSFMeBWX7v0GMsOAVA0kpV0Z_12bdKHbe865LxFxW2vcRl7izOIsQJx-N8L0yG0HfMd26zL1ti4zyV2RBx3y2jk_L4f7d1Bx1G9t0CkCUqXoAMknO4ViQZdE4DOg0VrB5CyTT5l1ZhccFwzGeaairRfvD-kGODo:1rsO0T:8NBcDLRIOB7eUY3vHeIL8ep12awrNuf-ioxjvD1pcSs','2024-04-18 14:23:57.229266'),('zzgnu9zqaf0cinnh1s4qy1rg802mve9c','.eJxVjMsOwiAQRf-FtSFMeBWX7v0GMsOAVA0kpV0Z_12bdKHbe865LxFxW2vcRl7izOIsQJx-N8L0yG0HfMd26zL1ti4zyV2RBx3y2jk_L4f7d1Bx1G9t0CkCUqXoAMknO4ViQZdE4DOg0VrB5CyTT5l1ZhccFwzGeaairRfvD-kGODo:1rsY1X:oe21hkExWAuIYFg3XOjISv3fMnkAAQrsz6DvqxT7mkQ','2024-04-19 01:05:43.917199');
 /*!40000 ALTER TABLE `django_session` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -349,7 +351,7 @@ CREATE TABLE `exam` (
   KEY `exam_create_user_id_5ba8a4b9_fk_auth_user_id` (`create_user_id`),
   CONSTRAINT `exam_create_user_id_5ba8a4b9_fk_auth_user_id` FOREIGN KEY (`create_user_id`) REFERENCES `auth_user` (`id`),
   CONSTRAINT `exam_subject_id_3be84281_fk_subject_id` FOREIGN KEY (`subject_id`) REFERENCES `subject` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -379,7 +381,7 @@ CREATE TABLE `exam_question` (
   KEY `exam_question_question_id_2a08bd39_fk_question_id` (`question_id`),
   CONSTRAINT `exam_question_exam_id_e32fc5a5_fk_exam_id` FOREIGN KEY (`exam_id`) REFERENCES `exam` (`id`),
   CONSTRAINT `exam_question_question_id_2a08bd39_fk_question_id` FOREIGN KEY (`question_id`) REFERENCES `question` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -411,7 +413,7 @@ CREATE TABLE `question` (
   PRIMARY KEY (`id`),
   KEY `question_subject_id_100787eb_fk_subject_id` (`subject_id`),
   CONSTRAINT `question_subject_id_100787eb_fk_subject_id` FOREIGN KEY (`subject_id`) REFERENCES `subject` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -438,7 +440,7 @@ CREATE TABLE `subject` (
   `create_date` datetime(6) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `unique appversion` (`code`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -460,4 +462,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-02-25  8:29:34
+-- Dump completed on 2024-04-05 20:07:44
