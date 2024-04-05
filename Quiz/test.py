@@ -67,15 +67,17 @@ def mix_source():
         plt.show()
         wavfile.write("D:/%i_audio_mix.wav"%i, fs1, sn)
 if __name__ == '__main__':
-    mix_source()
-    fs3, s3 = load_wav('audio3.wav')  # Protoss Zealot - "My life for Aiur!"
-    wavfile.write("D:/new_audio_3.wav", fs3, s3);
+    # mix_source()
+    # fs3, s3 = load_wav('audio3.wav')  # Protoss Zealot - "My life for Aiur!"
+    # wavfile.write("D:/new_audio_3.wav", fs3, s3);
+    
+    rate, data = wavfile.read('audio3.wav')
     # plot
     # pl.figure(figsize=(6.75,2))
     # pl.plot(s3)
     # pl.title('Signal 3')
     # pl.show()
     # pl.show()
-    plt.plot(s3)
-    plt.savefig('D:/foo.png')
-    # plt.show()
+    plt.plot(data)
+    # plt.savefig('D:/foo.png')
+    plt.show()

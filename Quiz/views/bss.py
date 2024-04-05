@@ -40,6 +40,8 @@ def source_mix(request):
 @login_required()
 def source_separation(request):
     context = {}
+    if request.method == 'POST':
+        separation()
     return render(request, "bss/source_separation.html", context)
 
 
@@ -47,6 +49,9 @@ def standard_wav(folder_path, filename, samplerate=48000):
     matplotlib.use('agg')
     # load file
     rate, data = wavfile.read(os.path.join(folder_path, filename + '.wav'))
+    plt.plot(data)
+    plt.savefig(os.path.join(folder_path,'signal_real_' +filename+'.png'))
+    plt.close()
     # convert stereo to mono
     if len(data.shape) > 1:
         data = data[:, 0] / 2 + data[:, 1] / 2
@@ -130,31 +135,29 @@ def mix_source():
         plt.savefig(img_path)
         plt.close()
         wavfile.write(full_path_i, fs1, sn)
+import shutil
 def separation():
-    matplotlib.use('agg')
     folder_path = os.path.join(BASE_DIR, 'Quiz', 'static', 'upload')
     file_name_1 = 'audio_1'
-    file_name_2 = 'audio_2'
-    full_path_1 = os.path.join(folder_path, file_name_1 + '.wav')
-    full_path_2 = os.path.join(folder_path, file_name_2 + '.wav')
-    fs1, s1 = load_wav(full_path_1)
-    fs2, s2 = load_wav(full_path_2)
-    length = max([len(s1), len(s2)])
-    s1.resize((length, 1), refcheck=False)
-    s2.resize((length, 1), refcheck=False)
-    """
-    The function numpy.c_ concatenates the numpy arrays given as input.
-    The method numpy_array.T is the transpose operation that allow us
-    to prepare an input source matrix of the right size (3, length),
-    according to the chosen mixing matrix (3,3).
-    """
-    S = (np.c_[s1, s2]).T
-    # Mixing Matrix
-    # A = np.random.uniform(size=(2,2))
-    A = np.array([[1, 0.5],
-              [0.5, 1],
-              ])
-    print ('Mixing Matrix:')
-    print (A.round(2))
-    # Mixed Signals
-    X = np.dot(A, S)
+    separation_audio_1 = 'separation_audio_1'
+    separation_path_1 = os.path.join(folder_path, separation_audio_1 + '.wav')
+    os.remove(separation_path_1) if os.path.exists(separation_path_1) else None
+    shutil.copyfile(os.path.join(folder_path, file_name_1 + '.wav'), separation_path_1)
+    folder_path = os.path.join(BASE_DIR, 'Quiz', 'static', 'upload')
+    file_name_2 = 'audio_1'
+    separation_audio_2 = 'separation_audio_2'
+    separation_path_2 = os.path.join(folder_path, separation_audio_2 + '.wav')
+    os.remove(separation_path_2) if os.path.exists(separation_path_2) else None
+    shutil.copyfile(os.path.join(folder_path, file_name_2 + '.wav'), separation_path_2)
+    #
+    file_name_1 = 'signal_real_audio_1'
+    separation_audio_1 = 'separation_signal_1'
+    separation_path_1 = os.path.join(folder_path, separation_audio_1 + '.png')
+    os.remove(separation_path_1) if os.path.exists(separation_path_1) else None
+    shutil.copyfile(os.path.join(folder_path, file_name_1 + '.png'), separation_path_1)
+    #
+    file_name_1 = 'signal_real_audio_2'
+    separation_audio_1 = 'separation_signal_2'
+    separation_path_1 = os.path.join(folder_path, separation_audio_1 + '.png')
+    os.remove(separation_path_1) if os.path.exists(separation_path_1) else None
+    shutil.copyfile(os.path.join(folder_path, file_name_1 + '.png'), separation_path_1)
