@@ -3,3 +3,5 @@ mysqlclient
 python-docx
 scipy
 matplotlib
+skimage
+pytesseract
