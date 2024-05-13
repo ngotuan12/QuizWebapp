@@ -46,3 +46,25 @@ def sign_in(request):
         except User.DoesNotExist:
             context.update({"err":_(u"Email hoặc mật khẩu không đúng!")})
     return render(request, 'quiz/auth/sign-in.html', context)
+
+def sign_in_1(request):
+    context = {}
+    if request.user.is_authenticated:
+        return redirect('quiz:home')
+    if request.method == 'POST':
+        user_password = request.POST.get('pass_word', '')
+        # user_name = request.POST.get('user_name', '')
+        username = request.POST.get('email', '')
+        try:
+            user = auth.authenticate(request, username=username, password=user_password)
+            if user is not None:
+                auth.login(request, user)
+                if(request.GET.get('next')):
+                    return redirect(request.GET.get('next'))
+                else:
+                    return redirect('quiz:home')
+            else:
+                raise User.DoesNotExist()
+        except User.DoesNotExist:
+            context.update({"err":_(u"Email hoặc mật khẩu không đúng!")})
+    return render(request, 'quiz/auth/sign-in.html', context)

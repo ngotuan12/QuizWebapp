@@ -14,7 +14,7 @@ from Quiz.views import bss as bss_views
 from Quiz.views import Practice as practice_views
 from Quiz.views import History as history_views
 from Quiz.views import Certificate as certificate_views
-
+from Quiz.views import ipv as ipv
 app_name = 'quiz'
 
 urlpatterns = [
@@ -43,6 +43,12 @@ urlpatterns = [
     path('history/', history_views.index , name='history'),
     path('certificate/', certificate_views.index , name='certificate'),
     path('sign/out/', auth_views.sign_out , name='sign_out'),
-    path('sign/in/', auth_views.sign_in , name='sign_in'),
+    path('sign/in/', auth_views.sign_in_1 , name='sign_in'),
     path('permission-error/', auth_views.permission_error, name='permission_error'),
+    # IPV
+    path('ipv/sample/', ipv.sample , name='ipv_sample'),
+    path('ipv/sample/add', ipv.sample_add , name='ipv_sample_add'),
+    path('ipv/sample/delete/<str:sample_id>/', ipv.sample_delete , name='ipv_sample_delete'),
+    path('ipv/sample/process', ipv.sample_process , name='ipv_sample_process'),
+    path('ipv/image_to_text/', ipv.image_to_text , name='ipv_image_to_text'),
     ]

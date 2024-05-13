@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load static %}
+{% block main-header %}
+	<!-- .page-title-bar -->
+	<header class="page-title-bar">
+		<!-- page title stuff goes here -->
+		<h1 class="page-title">{% trans 'Lấy mẫu' %}</h1>
+	</header>
+	<!-- /.page-title-bar -->
+{% endblock main-header %}
+
+{% block main-content %}
+
+<div class="page-section">
+	<div class="card card-fluid">
+		<div class="card-header pb-2">
+			<div class="row">
+				<div class="col-sm-10 pl-0">
+					<div class="form-group">
+						<div class="input-group input-group-alt">
+							<div class="input-group has-clearable">
+								<button id="clear-search" type="button" class="close"
+									aria-label="Close">
+									<span aria-hidden="true"><i class="fa fa-times-circle"></i></span>
+								</button>
+								<div class="input-group-prepend">
+									<span class="input-group-text"><span
+										class="oi oi-magnifying-glass"></span></span>
+								</div>
+								<input id="table-search" type="text" class="form-control"
+									placeholder="{% trans 'Tìm kiếm'%}">
+							</div>
+						</div>
+					</div>
+					
+				</div>
+				<div class="col-sm-2 pl-0">
+					<a class="btn btn-success btn-block" 
+						href="{% url 'quiz:ipv_sample_add'%}" >
+						{% trans 'Thêm'%}</a>
+				</div>
+			</div>
+		</div>
+		
+		<div class="card-body" style="font-size: 13px">
+			<table class="table table-hover" id="tbl-subject">
+				<thead>
+					<tr>
+						<th>{% trans 'Tên ảnh'%}</th>
+						<th>{% trans 'Đường dẫn'%}</th>
+						<th>{% trans 'Ngày tạo'%}</th>
+						<th class="text-center">{% trans 'Sửa|Xóa'%}</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for sample in samples %}
+					<tr>
+						<td>{{ sample.name }}</td>
+						<td>
+							<a class=""href="{% static sample.src_image_path %}">{{ sample.src_image_path }}</a></td>
+						<td>{{ sample.create_date }}</td>
+						<td class="text-center">
+							<a class="btn btn-sm btn-icon btn-secondary" href="#" 
+								onclick="removeSample({{ sample.id }},'{{ sample.name|truncatechars:20 }}');"><i class="fa fa-trash-o"></i></a>
+						</td>
+					</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+{% endblock main-content %}
+
+{% block scripts %}
+<script src="{% static 'vendor/datatables/jquery.dataTables.min.js' %} "></script>
+<script src="{% static 'vendor/datatables/extensions/buttons/dataTables.buttons.min.js' %}"></script>
+<script src="{% static 'vendor/datatables/extensions/buttons/buttons.bootstrap4.min.js' %}"></script>
+<script src="{% static 'vendor/datatables/extensions/buttons/buttons.html5.min.js' %}"></script>
+<script src="{% static 'vendor/datatables/extensions/buttons/buttons.print.min.js' %}"></script>
+
+<script src="{% static 'vendor/datatables/dataTables.bootstrap.js' %}"></script>
+<script>
+function removeSample(sample_id,sample_name)
+{
+	confirm = $.message.confirm("{% trans 'Bạn muốn xóa mẫu'%} "+ sample_name+' ? ');
+	confirm.on('message.confirm',function(){
+		var url = "{% url 'quiz:ipv_sample_delete' 'p_sample_id' %}".replace("p_sample_id",sample_id);
+		$.fn.loading.show();
+		var csrftoken = $.cookie('csrftoken');
+		var posting = $.post(url, {
+			'csrfmiddlewaretoken' : csrftoken,
+		});
+		
+		posting.done(function(data) {
+			if(data.handle==='error')
+			{
+				$.message.error(data.msg,"center",{"class_name":"alert alert-danger"});
+			}
+			else if(data.handle==='success')
+			{
+				window.location.reload();
+			}
+			$.fn.loading.hide();
+		});
+	});
+}
+</script>
+{% endblock scripts %}

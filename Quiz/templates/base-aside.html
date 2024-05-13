@@ -46,11 +46,21 @@
 					<li class="menu-item"><a href="{% url 'quiz:home'%}" class="menu-link home"><span
 							class="menu-icon fa fa-home"></span> <span class="menu-text">Dashboard</span></a>
 					</li>
+					
+					<li class="menu-item has-child">
+						<a href="#" class="menu-link">
+							<span class="menu-icon oi oi-list-rich"></span>
+							<span class="menu-text">{% trans 'IPV' %}</span> </a>
+						<ul class="menu">
+							<li class="menu-item"><a href="{% url 'quiz:ipv_sample' %}" class="menu-link">{% trans 'Lấy mẫu' %}</a></li>
+							<li class="menu-item"><a href="{% url 'quiz:ipv_image_to_text' %}" class="menu-link">{% trans 'Đọc văn bản' %}</a></li>
+						</ul>
+					</li>
 					<!-- /.menu-item -->
 					<!-- /.menu-item -->
-					<li class="menu-item has-child"><a href="#" class="menu-link"><span
+					<!-- <li class="menu-item has-child"><a href="#" class="menu-link"><span
 							class="menu-icon oi oi-person"></span> <span class="menu-text">{% trans 'Trường thi' %}</span></a>
-						<!-- child menu -->
+						child menu
 						<ul class="menu">
 							<li class="menu-item"><a href="{% url 'quiz:practice' %}"
 								class="menu-link">{% trans 'Luyện thi' %}</a></li>
@@ -59,8 +69,8 @@
 							<li class="menu-item"><a href="{% url 'quiz:certificate' %}"
 								class="menu-link">{% trans 'Chứng chỉ' %}</a></li>
 						</ul>
-						<!-- /child menu -->
-					</li>
+						/child menu
+					</li> -->
 					<!-- .menu-item -->
 					
 					<!-- .menu-item -->

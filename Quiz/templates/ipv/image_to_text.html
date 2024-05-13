@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load static %}
+{% block main-header %}
+	<!-- .page-title-bar -->
+	<header class="page-title-bar">
+		<!-- page title stuff goes here -->
+		<h1 class="page-title">{% trans 'Đọc văn bản' %}</h1>
+	</header>
+	<!-- /.page-title-bar -->
+{% endblock main-header %}
+
+{% block main-content %}
+<div class="page-section">
+	<div class="card">
+		{% if has_error %}
+		<div class="card-header">
+			<label id="codeError" class="error" style="margin-top: 2%;margin-left: 3%;">{{ has_error }} </label>
+		</div>
+		{% endif %}
+		<div class="card-body">
+			<h3 class="card-title">{% trans 'Chọn ảnh để xử lý'%}</h3>
+			<form class="needs-validation" enctype='multipart/form-data' novalidate id="form" method="post" action="{{ app_path }}">
+				{% csrf_token %}
+				<div class="form-row mb-3">
+					<select class="custom-select" id="slSample" name="slSample" data-placeholder="Chọn Ảnh.." >
+						{% for sample in samples %}
+						
+							<option value="{{ sample.id }}"  {% if forloop.first %} selected {% endif %}
+								>{{ sample.src_image_path }}</option>
+						{% endfor %}
+					</select>
+				</div>
+				
+				<div class="form-row mt-3">
+					<img id="src_img" src="" width="100%" height="100%" style="min-height: 200px"/>
+				</div>
+				
+				
+			</form>
+			<div class="form-actions justify-content-center mt-2">
+				<button class="btn btn-success" id="btnProcess"type="button" style="width: 100px">{% trans 'Xử lý'%}</button>
+				<a href="{% url 'quiz:ipv_sample'%}" type="button" class="btn btn-warning" style="width: 100px"> {% trans 'Trở về'%}</a>
+			</div>
+			
+			<div class="form-row mt-3">
+				<textarea id="txtOutput" class="col-sm-12"rows="5" cols="1">fdsfdsf </textarea>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock main-content %}
+
+{% block scripts %}
+{{ block.super }}
+<script>
+var img_url = "{% static 'p_image_path' %}"
+function showSrcImage()
+{
+	var img_path = $("#slSample option:selected").text();
+	img_path = img_url.replace("p_image_path", img_path);
+	$("#src_img").attr("src",img_path);
+	$("#txtOutput").text("");
+}
+
+function processImage(sample_id)
+{
+	alert(sample_id);
+	
+	$.fn.loading.show();
+	var csrftoken = $.cookie('csrftoken');
+	var posting = $.post("{% url 'quiz:ipv_sample_process' %}", {
+		'csrfmiddlewaretoken' : csrftoken,
+		'sample_id' : sample_id
+	});
+	
+	posting.done(function(data) {
+		if(data.handle==='error')
+		{
+			$.message.error(data.msg,"center",{"class_name":"alert alert-danger"});
+		}
+		else if(data.handle==='success')
+		{
+			var output = data.output;
+			$("#txtOutput").text(output);
+		}
+		$.fn.loading.hide();
+	});
+}
+ $(document).ready(function(){
+	showSrcImage();
+	$("#slSample").on("change",function(){
+		showSrcImage();
+	});
+	$("#btnProcess").on("click",function(){
+		processImage($("#slSample option:selected").val());
+	});
+ });
+
+ 
+</script>
+{% endblock scripts %}
