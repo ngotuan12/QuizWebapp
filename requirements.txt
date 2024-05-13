@@ -3,6 +3,7 @@ mysqlclient
 python-docx
 scipy
 matplotlib
-skimage
+scikit-image
 pytesseract
-cv2
+opencv-python
+opencv-python-headless
